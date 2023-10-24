@@ -21,7 +21,6 @@ bool loadData(string array[], string source){
     string line;
     int counter = 0;
     while(getline(file, line)){
-        cout << line << endl;
         array[counter++] = line;
     }
     file.close();
