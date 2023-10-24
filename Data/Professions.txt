@@ -1,0 +1,12 @@
+Doctor
+Teacher
+Engineer
+Lawyer
+Architect
+Counter
+Chef
+Mechanic
+Actor
+Pilot
+Entrepreneur
+Farmer
