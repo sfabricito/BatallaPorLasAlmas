@@ -4,13 +4,17 @@
 int main(int argc, char const *argv[])
 {
     initializeData();
-    Human * humanity[100000];
-    for (int i = 0; i < 100000; i++)
-        humanity[i] = NULL; 
 
-    createHumans(humanity, 100000);
-
-    cout << humanityCompleted(humanity) << endl;
-
+    generateHumans(20);
+    for (int i = 0; i < humanitySize; i++)
+    {
+        if (humanity[i] != NULL)
+        {
+            humanity[i]->print();
+            cout << "\033[31m" << "--------------------------------------" << "\033[0m"<< endl;
+        }
+        
+    }
+    
     return 0;
 }
