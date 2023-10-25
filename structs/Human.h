@@ -20,6 +20,7 @@ int calculateFriendshipScore(Human* humanBase, Human* possibleFriend);
 struct Human{
     int id;
     string state; // ALIVE, HELL or HEAVEN
+    int generation;
     string name;
     string lastName;
     string country;
@@ -30,9 +31,10 @@ struct Human{
     Human * friends[100];
     int socialMediaPriority[7];
 
-    Human(int _id, string _state, string _name, string _lastName, string _country, string _belief, string _profession){
+    Human(int _id, int _generation, string _state, string _name, string _lastName, string _country, string _belief, string _profession){
         id = _id;
         state = _state;
+        generation = _generation;
         name = _name;
         lastName = _lastName;
         country = _country;
@@ -50,6 +52,7 @@ struct Human{
     void print(){
         cout << "ID: " << id << endl;
         cout << "State: " << state << endl;
+        cout << "Generation: " << generation << endl;
         cout << "Name: " << name << endl;
         cout << "lastName: " << lastName << endl;
         cout << "Country: " << country << endl;
@@ -89,10 +92,11 @@ Human * generateHuman(){
     string country = countries[generateRandomNumber(13)];
     string belief = beliefs[generateRandomNumber(4)];
     string profession = professions[generateRandomNumber(11)];
-    return new Human(id, "ALIVE", name, lastName, country, belief, profession);
+    return new Human(id, generation, "ALIVE", name, lastName, country, belief, profession);
 }
 
-void generateHumans(int amount){
+void generateGeneration(int amount){
+    generation++;
     int counter = 0;
     int humansGenerated[amount];
     while (!humanityCompleted() && counter < amount){
@@ -117,8 +121,7 @@ int generateUniqueID(){
 
 void generateFriends(int humanID) {
     Human* human = searchHumanByID(humanID);
-    int maxFriends = 100;  // Max number of friends
-
+    
     // Precompute a list of friend candidates
     vector<Human*> friendCandidates;
 
@@ -132,13 +135,7 @@ void generateFriends(int humanID) {
             }
         }
     }
-
-    // Shuffle the candidates to randomize friend selection
-    shuffle(friendCandidates.begin(), friendCandidates.end(), std::default_random_engine(std::random_device{}()));
-
-    // Select friends from the candidate list
-    int numFriends = min(maxFriends, static_cast<int>(friendCandidates.size()));
-
+    int numFriends = min(100, static_cast<int>(friendCandidates.size()));
     for (int i = 0; i < numFriends; i++) {
         human->friends[i] = friendCandidates[i];
     }
@@ -147,21 +144,14 @@ void generateFriends(int humanID) {
 int calculateFriendshipScore(Human* humanBase, Human* possibleFriend) {
     int score = 0;
 
-    if (humanBase->country != possibleFriend->country) {
+    if (humanBase->country != possibleFriend->country) 
         return score;
-    }
-
-    if (humanBase->belief == possibleFriend->belief) {
-        score++;
-    }
-
-    if (humanBase->lastName == possibleFriend->lastName) {
-        score++;
-    }
-
-    if (humanBase->profession == possibleFriend->profession) {
-        score++;
-    }
+    if (humanBase->belief == possibleFriend->belief) 
+        return ++score;
+    if (humanBase->lastName == possibleFriend->lastName)
+        return ++score;
+    if (humanBase->profession == possibleFriend->profession)
+        return ++score;
 
     return score;
 }

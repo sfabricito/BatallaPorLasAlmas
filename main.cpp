@@ -5,7 +5,9 @@ int main(int argc, char const *argv[])
 {
     initializeData();
 
-    generateHumans(20);
+    generateGeneration(3);
+    generateGeneration(3);
+    generateGeneration(3);
     for (int i = 0; i < humanitySize; i++)
     {
         if (humanity[i] != NULL)

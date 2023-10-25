@@ -10,6 +10,7 @@ struct Human;
 
 // Variables
 const int humanitySize = 100000;
+int generation = 0;
 Human * humanity[humanitySize];
 string names[1000];
 string lastNames[12];
