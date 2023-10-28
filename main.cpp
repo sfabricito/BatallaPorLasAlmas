@@ -1,22 +1,23 @@
 // Imports
 #include "structs/Human.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+
+void dividirArreglo(int arr[], int inicio, int fin);
 
 int main(int argc, char const *argv[])
 {
     initializeData();
-
-    generateGeneration(3);
-    generateGeneration(3);
-    generateGeneration(3);
-    for (int i = 0; i < humanitySize; i++)
-    {
-        if (humanity[i] != NULL)
-        {
-            humanity[i]->print();
-            cout << "\033[31m" << "--------------------------------------" << "\033[0m"<< endl;
-        }
-        
-    }
+    lifeTree = new Tree();
+    generateGeneration(500);
+    generateGeneration(500);
+    generateGeneration(500);
+    generateGeneration(500);
+    generateGeneration(500);
     
+    inOrder(lifeTree->root);
+    cout << height(lifeTree->root) << endl;
+
     return 0;
 }

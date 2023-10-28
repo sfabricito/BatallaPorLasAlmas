@@ -7,11 +7,13 @@ using namespace std;
 
 // Structs
 struct Human;
+struct Tree;
 
 // Variables
 const int humanitySize = 100000;
 int generation = 0;
 Human * humanity[humanitySize];
+Tree * lifeTree;
 string names[1000];
 string lastNames[12];
 string countries[14];

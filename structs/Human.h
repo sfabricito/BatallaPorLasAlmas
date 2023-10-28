@@ -5,7 +5,8 @@
 #include <random> // Libraru for random numbers
 #include <vector>
 #include <algorithm>
-#include "Data.h"
+#include <unistd.h>
+#include "LifeTree.h"
 // Prototypes
 Human * searchHumanByID(int id);
 int generateRandomNumber(int to);
@@ -15,6 +16,8 @@ void generateFriends(int humanID);
 int countHumansSimilarInterest(Human * humanBase);
 int humansCanBeFriends(Human * humanBase, Human * possibleFriend);
 int calculateFriendshipScore(Human* humanBase, Human* possibleFriend);
+void fillLifeTree(int array[], int from, int to);
+int generateLifeTree();
 
 // Structs
 struct Human{
@@ -104,6 +107,7 @@ void generateGeneration(int amount){
         humanity[newHuman->id] = newHuman;
         humansGenerated[counter++] = newHuman->id;
     }
+    generateLifeTree();
     while (counter > 0)
         generateFriends(humansGenerated[--counter]);
 }
@@ -113,7 +117,7 @@ int generateUniqueID(){
     int id;
     while (!validID){
         id = generateRandomNumber(99999);
-        if(searchHumanByID(id) == NULL)
+        if(humanity[id] == NULL)
             validID = true;
     }
     return id;
@@ -157,10 +161,14 @@ int calculateFriendshipScore(Human* humanBase, Human* possibleFriend) {
 }
 
 Human * searchHumanByID(int id){
+    if (lifeTree->root != NULL){
+        return search(id, lifeTree->root);
+    }
     for (int i = 0; i < humanitySize; i++)
         if(humanity[i] != NULL && i == id)
             return humanity[i];
     return NULL;
+    
 }
 
 int generateRandomNumber(int to){
@@ -173,22 +181,74 @@ int generateRandomNumber(int to){
     return distribution(gen);
 }
 
-int humansCanBeFriends(Human * humanBase, Human * possibleFriend){
-    if (
-        (humanBase->country == possibleFriend->country) && 
-        (
-            humanBase->belief == possibleFriend->belief || 
-            humanBase->lastName == possibleFriend->lastName || 
-            humanBase->profession == possibleFriend->profession
-        )
-    )
-        return true;
-    return false;
-}
-
 bool humanityCompleted(){ // Verify if the humanity array is full
     for (int i = 0; i < humanitySize; i++)
         if (humanity[i] == NULL)
             return false;
     return true;
+}
+
+int countHumansAlive(){
+    int counter = 0;
+    for (int i = 0; i < humanitySize; i++)
+        if (humanity[i] != NULL && humanity[i]->state == "ALIVE")
+            counter++;
+    return counter;
+}
+
+Human * findHumanInPosition(int position){
+    int counter = 0;
+    for (int i = 0; i < humanitySize; i++){
+        if (humanity[i] != NULL)
+            counter++;
+        if (counter == position)
+            return humanity[i];
+    }
+        
+    return NULL;
+}
+
+int calculateNodes(){
+    int percentageHumans = countHumansAlive() * 0.01;
+    int nodes;
+    for (int i = 0; i < 17; i++)
+        if(pow(2, i) > percentageHumans){
+            nodes = pow(2, i);
+            break;
+        }
+    return --nodes;
+}
+
+int generateLifeTree(){
+    lifeTree = new Tree();
+    int totalNodes = calculateNodes();
+    int partitionLocations[totalNodes];
+    int partition = countHumansAlive() / totalNodes;
+    for (int i = 0; i < totalNodes; i++)
+        partitionLocations[i] = partition * (i + 1);
+
+    int min = (totalNodes / 2);
+    int max = min;
+    int counter = min;
+
+    fillLifeTree(partitionLocations, 0, totalNodes);
+    addPointerLeaf(lifeTree->root);
+    return 0;
+}
+
+void fillLifeTree(int array[], int start, int end){
+    if (start >= end) {
+        return;
+    }
+    
+    int size = abs(start - end);
+    int middle = start + (size / 2);
+    
+    lifeTree->insert(findHumanInPosition(array[middle])->id);
+    
+    // Process the left half of the array
+    fillLifeTree(array, start, middle);
+    
+    // Process the right half of the array
+    fillLifeTree(array, middle + 1, end);
 }
