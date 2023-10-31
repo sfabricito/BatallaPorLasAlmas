@@ -6,7 +6,7 @@ void postOnSocialMedia(Human* human, int platformIndex) {
         // Determine the social media platform based on platformIndex.
         string platformName;
 
-        switch (platformIndex ) {
+        switch (platformIndex) {
             case 0:
                 platformName = "Twitter";
                 break;

@@ -11,23 +11,36 @@ struct Tree;
 
 // Variables
 const int humanitySize = 100000;
+const int lastNamesSize = 12;
+const int countriesSize = 14;
 int generation = 0;
+
 Human * humanity[humanitySize];
 Tree * lifeTree;
+
+// Arrays
 string names[1000];
-string lastNames[12];
-string countries[14];
+string lastNames[lastNamesSize];
+string countries[countriesSize];
 string beliefs[5];
 string professions[12];
-string socialMedia[7];
-string deadlySins[] = {
-    "lust",
-    "gluttony",
-    "avarice",
-    "laziness",
-    "anger",
-    "envy",
-    "arrogance"
+const string socialMedia[] = {
+    "TWITTER", // anger
+    "INSTAGRAM",
+    "NETFLIX", // laziness
+    "TINDER", // lust
+    "FACEBOOK",
+    "LINKEDIN", // avarice
+    "PINTEREST"
+};
+const string deadlySins[] = {
+    "LUST", // lujuria
+    "GLUTTONY", // glotonería
+    "AVARICE", // avaricia
+    "LAZINESS", // pereza
+    "ANGER", // enojo
+    "ENVY", // emvidia
+    "ARROGANCE" // arrogancia
 };
 
 bool loadData(string array[], string source){

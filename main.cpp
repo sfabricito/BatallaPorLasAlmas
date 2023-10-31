@@ -1,6 +1,6 @@
 // Imports
 //#include "structs/Human.h"
-#include "structs/Posts.h"
+#include "structs/Post.h"
 #include <stdio.h>
 #include <stdlib.h>
 
