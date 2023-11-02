@@ -58,14 +58,6 @@ int maximum (int a, int b)
     else return b;    
 }
 
-int height (Node * node)
-{
-    if (node == NULL)
-        return -1;
-    else 
-        return 1 + maximum(height(node->rightNode), height(node->leftNode));
-}
-
 Human * search (int id, Node * node){
     if (node == NULL)
         return NULL;
@@ -110,3 +102,11 @@ int countNodes(Node * node){
     else
         return 1+ countNodes(node->rightNode) + countNodes(node->leftNode);
 }   
+
+int height (Node * node)
+{
+    if (node == NULL)
+        return -1;
+    else 
+        return 1 + maximum(height(node->rightNode), height(node->leftNode));
+}
