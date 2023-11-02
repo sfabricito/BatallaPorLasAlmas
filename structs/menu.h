@@ -1,7 +1,7 @@
 // Includes
 #include "iostream"
 #include "string"
-
+#include "Angel.h"
 using namespace std;
 
 // Prototipos
@@ -15,7 +15,16 @@ void menuHell();
 void menuHeaven();
 void menuHuman();
 void menuWinner();
+void menu();
+void SocialMediaOptions();
+void BeliefOptions();
+void ProfessionOptions();
+void CountryOptions();
+void LastnameOptions();
+void menuFamilyPost();
 
+void linea();
+void limpiarConsola();
 void continuar();
 int pedirNumero(string text);
 string pedirString(string text);
@@ -145,7 +154,10 @@ void menuWorld(){
             case 1: // Ver clientes
                 limpiarConsola();
                 cout << textoAzul("Generate Humanity") << endl;
-                //Funcion to generate humanity
+                linea();
+                cout << "How many humans do you want to generate?" << endl;
+                int amount = pedirNumero("Amount: ");
+                generateGeneration(amount);
                 continuar();
                 break;
             case 2:
@@ -174,14 +186,16 @@ void menuTree(){
             case 1: // Print amount of tree levels
                 limpiarConsola();
                 cout << textoAzul("Tree Levels") << endl;
-                //Funcion to print amount of tree levels
+                cout << " Amount of tree levels" << endl;
+                cout << height(root) << endl;
                 break;
             case 2: // Print amount of nodes
                 limpiarConsola();
                 cout << textoAzul("Tree Nodes") << endl;;
-                // Funcion to print amount of nodes
+                cout << " Amount of nodes" << endl;
+                cout << countNodes() << endl;//Corregir
                 break;
-            case 3: // Print amount of humans in tree
+            case 3: // Print amount of humans
                 limpiarConsola();
                 cout << textoAzul("Humans in Tree") << endl;;
                 // Funcion to print amount of humans in tree
@@ -201,6 +215,69 @@ void menuTree(){
 }
 
 
+void SocialMediaOptions(){
+    cout << " (1) Twitter" << endl;
+    cout << " (2) Instagram" << endl;
+    cout << " (3) Netflix" << endl;
+    cout << " (4) Tinder" << endl;
+    cout << " (5) Facebook" << endl;
+    cout << " (6) LinkedIn" << endl;
+    cout << " (7) Pinterest" << endl;
+
+}
+
+void BeliefOptions(){
+    cout << " (1) Christianity " << endl;
+    cout << " (3) Islam " << endl;
+    cout << " (4) Hinduism " << endl;
+    cout << " (5) Buddhism " << endl;
+    cout << " (6) Atheism " << endl;
+}
+void ProfessionOptions(){
+    cout << " (1) Doctor" << endl;
+    cout << " (2) Teacher" << endl;
+    cout << " (3) Engineer" << endl;
+    cout << " (4) Lawyer" << endl;
+    cout << " (5) Architect" << endl;
+    cout << " (6) Accountant" << endl;
+    cout << " (7) Chef" << endl;
+    cout << " (8) Mechanic" << endl;
+    cout << " (9) Actor" << endl;
+    cout << " (10) Pilot" << endl;
+    cout << " (11) Entrepreneur" << endl;
+    cout << " (12) Farmer" << endl;
+}
+void CountryOptions(){
+    cout << " (1) USA" << endl;
+    cout << " (2) Canada" << endl;
+    cout << " (3) Australia" << endl;
+    cout << " (4) France" << endl;
+    cout << " (5) Germany" << endl;
+    cout << " (6) Brazil" << endl;
+    cout << " (7) Argentina" << endl;
+    cout << " (8) Spain" << endl;
+    cout << " (9) Italy" << endl;
+    cout << " (10) Singapore" << endl;
+    cout << " (11) Sweden" << endl;
+    cout << " (12) Belgium" << endl;
+    cout << " (13) New Zealand" << endl;
+    cout << " (14) Monaco" << endl;
+}
+
+void LastnameOptions(){
+    cout << " (1) Castillo" << endl;
+    cout << " (2) Montenegro" << endl;
+    cout << " (3) Valencia" << endl;
+    cout << " (4) Delgado" << endl;
+    cout << " (5) Rivera" << endl;
+    cout << " (6) Serrano" << endl;
+    cout << " (7) Alarcón" << endl;
+    cout << " (8) Mendoza" << endl;
+    cout << " (9) Vargas" << endl;
+    cout << " (10) Herrera" << endl;
+    cout << " (11) Roman" << endl;
+    cout << " (12) Paredes" << endl;
+}
 
 
 void menuSocialMedia(){
@@ -209,7 +286,7 @@ void menuSocialMedia(){
         limpiarConsola();
         cout << textoAzul("Menu Social Media Publications") << endl;;
         cout << " (1) Look for a user and create a post in a certain social media app" << endl;
-        cout << " (2) Region Post" << endl;
+        cout << " (2) Religion Post" << endl;
         cout << " (3) Profesion Post in multiple apps" << endl;
         cout << " (4) Family Post in favorite apps" << endl;
         cout << " (5) Return to Main Menu  " << endl;
@@ -218,19 +295,70 @@ void menuSocialMedia(){
             case 1: // 
                 limpiarConsola();
                 cout << textoAzul("User ID") << endl;
+                int id = pedirNumero("ID: ");
+                if (id < 0 || id > 1000000){
+                    cout << "ID out of range" << endl;
+                    continuar();
+                    break;
+                }
+                if (searchHumanByID(id) = NULL){
+                    cout << "User not found" << endl;
+                    continuar();
+                    break;
+                }
+                cout << "Select the social media app you want to post in" << endl;
+                SocialMediaOptions();
+                int option = pedirNumero("Selection: ");
+                if (option < 1 || option > 7){
+                    cout << "Option unavailable, please select a valid option" << endl;
+                    continuar();
+                    break;
+                }
+                else{
+                    postOnSocialMediaByID(id,option);
+                }
                 break;
             case 2: //
                 limpiarConsola();
-                cout << textoAzul("Region") << endl;
+                cout << textoAzul("Religion") << endl;
+                cout << "Select the religion you want to post with" << endl;
+                BeliefOptions();
+                int option2 = pedirNumero("Selection: ");
+                if (option2 < 1 || option2 > 6){
+                    cout << "Option unavailable, please select a valid option" << endl;
+                    continuar();
+                    break;
+                }
+                else{
+                    postByReligion(option2);
+                }
                 break;
             case 3:
                 limpiarConsola();
                 cout << textoAzul("Profesion") << endl;
+                cout << "Select the profession you want to post in" << endl;
+                ProfessionOptions();
+                int option3 = pedirNumero("Selection: ");
+                if (option3 < 1 || option3 > 12){
+                    cout << "Option unavailable, please select a valid option" << endl;
+                    continuar();
+                    break;
+                }
+                else{
+                    cout << "Select the amount of social media apps you want to post in" << endl;
+                    int amount = pedirNumero("Amount: ");
+                    if (amount < 1 || amount > 7){
+                        cout << "Option unavailable, please select a valid option" << endl;
+                        continuar();
+                        break;
+                    }
+                    postByProfession(option3 ,amount);
+                }
                 break;
             case 4:
                 limpiarConsola();
                 cout << textoAzul("Family Post") << endl;
-                break;
+                menuFamilyPost();
             case 5:
                 return;
             default:
@@ -239,6 +367,57 @@ void menuSocialMedia(){
         }
     }
 }
+
+void menuFamilyPost(){
+    int opcion = 0;
+    while (opcion != 2){
+        limpiarConsola();
+        cout << textoAzul("Family Post") << endl;;
+        cout << " (1) Post by country and last name" << endl;
+        cout << " (2) Return to Main Menu  " << endl;
+        opcion = pedirNumero("Selection: ");
+        switch (opcion){
+            case 1:
+                limpiarConsola();
+                cout << textoAzul("Country and Last Name") << endl;
+                cout << "Select the country you want to post in" << endl;
+                CountryOptions();
+                int option3 = pedirNumero("Selection: ");
+                if (option3 < 1 || option3 > 14){
+                    cout << "Option unavailable, please select a valid option" << endl;
+                    continuar();
+                    break;
+                }
+                cout << "Select the last name you want to post with" << endl;
+                LastnameOptions();
+                int option4 = pedirNumero("Selection: ");
+                if (option4 < 1 || option4 > 12){
+                    cout << "Option unavailable, please select a valid option" << endl;
+                    continuar();
+                    break;
+                }
+                else{
+                    postByFamily(option3, option4);
+                }
+                break;
+            case 4:
+                return;
+            default:
+                cout << "Option unavailable, please select a valid option" << endl;
+                continuar();
+        }
+    }
+}
+
+void DemonOptions(){
+    cout << textoRojo(" (1) Sin = Lust") << endl;
+    cout << textoRojo(" (2) Sin = Gluttony") << endl;
+    cout << textoAzul(" (3) Sin = Greed") << endl;
+    cout << textoRojo(" (4) Sin = Sloth") << endl;
+    cout << textoRojo(" (5) Sin = Wrath")<< endl;
+    cout << textoRojo(" (6) Sin = Envy") << endl;
+    cout << textoRojo(" (7) Sin = Pride") << endl;
+}	
 
 void menuHell(){
     int opcion = 0;
@@ -252,7 +431,8 @@ void menuHell(){
             case 1:
                 limpiarConsola();
                 cout << textoRojo("Demon of choice") << endl;
-                //Function to condemn a sinner
+                DemonOptions();
+                int option = pedirNumero("Selection: ");
                 break;
             case 2:
                 return;
@@ -299,12 +479,37 @@ void menuHuman(){
             case 1:
                 limpiarConsola();
                 cout << textoAzul("Human ID") << endl;
-                //Function to search human through ID
+                int id = pedirNumero("ID: ");
+                if (id < 0 || id > 1000000){
+                    cout << "ID out of range" << endl;
+                    continuar();
+                    break;
+                }
+                if (searchHumanByID(id) = NULL){
+                    cout << "User not found" << endl;
+                    continuar();
+                    break;
+                }
+                else{
+                    searchHumanByID(id)->print();
+                }
                 break;
             case 2:
                 limpiarConsola();
                 cout << textoAzul("Human Name and Last Name") << endl;
-                //Function to search human through Name and Last Name
+                
+                string name = pedirString("Name: ");
+                continuar();
+                LastnameOptions();
+                string lastName = pedirString("Last Name: ");
+                if (searchHumanByName(name, lastName) = NULL){
+                    cout << "User not found" << endl;
+                    continuar();
+                    break;
+                }
+                else{
+                    searchHumanByName(name, lastName)->print();
+                }
                 continuar();
                 break;
             case 3:
