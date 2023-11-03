@@ -43,6 +43,16 @@ const string deadlySins[] = {
     "ARROGANCE" // arrogancia
 };
 
+const string demons[] = {
+    "ASMODEO", // lujuria
+    "BELFEGOR", // glotonería
+    "MAMMON", // avaricia
+    "ABADON", // pereza
+    "SATAN", // enojo
+    "BELCEBU", // emvidia
+    "LUCIFER" // arrogancia
+};
+
 bool loadData(string array[], string source){
     std::ifstream file(source);
     if (!file.is_open()) {
