@@ -74,6 +74,12 @@ struct Human{
         {
             cout << socialMediaPriority[i] << ", ";
         }
+        cout << "]" << endl;
+        cout << "Sins: [";
+        for (int i = 0; i < 7; i++)
+        {
+            cout << sins[i] << ", ";
+        }
         cout << "]" << endl; 
         cout << "Friends" << endl; 
         for (int i = 0; i < 100; i++){
