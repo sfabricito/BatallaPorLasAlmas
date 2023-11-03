@@ -22,6 +22,11 @@ void ProfessionOptions();
 void CountryOptions();
 void LastnameOptions();
 void menuFamilyPost();
+void DemonOptions();
+void CalculateWinner();
+int CountAlive();
+int CountHeaven();
+int CountHell();
 
 void linea();
 void limpiarConsola();
@@ -187,13 +192,13 @@ void menuTree(){
                 limpiarConsola();
                 cout << textoAzul("Tree Levels") << endl;
                 cout << " Amount of tree levels" << endl;
-                cout << height(root) << endl;
+                //co
                 break;
             case 2: // Print amount of nodes
                 limpiarConsola();
                 cout << textoAzul("Tree Nodes") << endl;;
                 cout << " Amount of nodes" << endl;
-                cout << countNodes() << endl;//Corregir
+                //cout << countNodes() << endl;//Corregir
                 break;
             case 3: // Print amount of humans
                 limpiarConsola();
@@ -227,25 +232,25 @@ void SocialMediaOptions(){
 }
 
 void BeliefOptions(){
-    cout << " (1) Christianity " << endl;
-    cout << " (3) Islam " << endl;
-    cout << " (4) Hinduism " << endl;
-    cout << " (5) Buddhism " << endl;
-    cout << " (6) Atheism " << endl;
+    cout << " Christianity " << endl;
+    cout << " Islam " << endl;
+    cout << " Hinduism " << endl;
+    cout << " Buddhism " << endl;
+    cout << " Atheism " << endl;
 }
 void ProfessionOptions(){
-    cout << " (1) Doctor" << endl;
-    cout << " (2) Teacher" << endl;
-    cout << " (3) Engineer" << endl;
-    cout << " (4) Lawyer" << endl;
-    cout << " (5) Architect" << endl;
-    cout << " (6) Accountant" << endl;
-    cout << " (7) Chef" << endl;
-    cout << " (8) Mechanic" << endl;
-    cout << " (9) Actor" << endl;
-    cout << " (10) Pilot" << endl;
-    cout << " (11) Entrepreneur" << endl;
-    cout << " (12) Farmer" << endl;
+    cout << " Doctor" << endl;
+    cout << " Teacher" << endl;
+    cout << " Engineer" << endl;
+    cout << " Lawyer" << endl;
+    cout << " Architect" << endl;
+    cout << " Accountant" << endl;
+    cout << " Chef" << endl;
+    cout << " Mechanic" << endl;
+    cout << " Actor" << endl;
+    cout << " Pilot" << endl;
+    cout << " Entrepreneur" << endl;
+    cout << " Farmer" << endl;
 }
 void CountryOptions(){
     cout << " (1) USA" << endl;
@@ -265,23 +270,25 @@ void CountryOptions(){
 }
 
 void LastnameOptions(){
-    cout << " (1) Castillo" << endl;
-    cout << " (2) Montenegro" << endl;
-    cout << " (3) Valencia" << endl;
-    cout << " (4) Delgado" << endl;
-    cout << " (5) Rivera" << endl;
-    cout << " (6) Serrano" << endl;
-    cout << " (7) Alarcón" << endl;
-    cout << " (8) Mendoza" << endl;
-    cout << " (9) Vargas" << endl;
-    cout << " (10) Herrera" << endl;
-    cout << " (11) Roman" << endl;
-    cout << " (12) Paredes" << endl;
+    cout << " Castillo" << endl;
+    cout << " Montenegro" << endl;
+    cout << " Valencia" << endl;
+    cout << " Delgado" << endl;
+    cout << " Rivera" << endl;
+    cout << " Serrano" << endl;
+    cout << " Alarcón" << endl;
+    cout << " Mendoza" << endl;
+    cout << " Vargas" << endl;
+    cout << " Herrera" << endl;
+    cout << " Roman" << endl;
+    cout << " Paredes" << endl;
 }
 
 
 void menuSocialMedia(){
     int opcion = 0;
+    string option2;
+    string option3;
     while (opcion != 5){
         limpiarConsola();
         cout << textoAzul("Menu Social Media Publications") << endl;;
@@ -301,7 +308,7 @@ void menuSocialMedia(){
                     continuar();
                     break;
                 }
-                if (searchHumanByID(id) = NULL){
+                if (searchHumanByID(id) == NULL){
                     cout << "User not found" << endl;
                     continuar();
                     break;
@@ -323,8 +330,8 @@ void menuSocialMedia(){
                 cout << textoAzul("Religion") << endl;
                 cout << "Select the religion you want to post with" << endl;
                 BeliefOptions();
-                int option2 = pedirNumero("Selection: ");
-                if (option2 < 1 || option2 > 6){
+                option2 = pedirString("Selection: ");
+                if (option2 != "Christianity" && option2 != "Islam" && option2 != "Hinduism" && option2 != "Buddhism" && option2 != "Atheism"){
                     cout << "Option unavailable, please select a valid option" << endl;
                     continuar();
                     break;
@@ -338,8 +345,8 @@ void menuSocialMedia(){
                 cout << textoAzul("Profesion") << endl;
                 cout << "Select the profession you want to post in" << endl;
                 ProfessionOptions();
-                int option3 = pedirNumero("Selection: ");
-                if (option3 < 1 || option3 > 12){
+                option3 = pedirString("Selection: ");
+                if (option3 != "Doctor" && option3 != "Teacher" && option3 != "Engineer" && option3 != "Lawyer" && option3 != "Architect" && option3 != "Accountant" && option3 != "Chef" && option3 != "Mechanic" && option3 != "Actor" && option3 != "Pilot" && option3 != "Entrepreneur" && option3 != "Farmer"){
                     cout << "Option unavailable, please select a valid option" << endl;
                     continuar();
                     break;
@@ -370,6 +377,8 @@ void menuSocialMedia(){
 
 void menuFamilyPost(){
     int opcion = 0;
+    string countryname;
+    string lastname;
     while (opcion != 2){
         limpiarConsola();
         cout << textoAzul("Family Post") << endl;;
@@ -382,22 +391,30 @@ void menuFamilyPost(){
                 cout << textoAzul("Country and Last Name") << endl;
                 cout << "Select the country you want to post in" << endl;
                 CountryOptions();
-                int option3 = pedirNumero("Selection: ");
-                if (option3 < 1 || option3 > 14){
+                countryname = pedirString("Selection: ");
+                if (countryname != "USA" && countryname != "Canada" && countryname != "Australia" && countryname != "France" && countryname != "Germany" && countryname != "Brazil" && countryname != "Argentina" && countryname != "Spain" && countryname != "Italy" && countryname != "Singapore" && countryname != "Sweden" && countryname != "Belgium" && countryname != "New Zealand" && countryname != "Monaco"){
                     cout << "Option unavailable, please select a valid option" << endl;
                     continuar();
                     break;
                 }
                 cout << "Select the last name you want to post with" << endl;
                 LastnameOptions();
-                int option4 = pedirNumero("Selection: ");
-                if (option4 < 1 || option4 > 12){
+                lastname = pedirString("Selection: ");
+                if (lastname != "Castillo" && lastname != "Montenegro" && lastname != "Valencia" && lastname != "Delgado" && lastname != "Rivera" && lastname != "Serrano" && lastname != "Alarcón" && lastname != "Mendoza" && lastname != "Vargas" && lastname != "Herrera" && lastname != "Roman" && lastname != "Paredes"){
                     cout << "Option unavailable, please select a valid option" << endl;
                     continuar();
                     break;
                 }
+                //limpiarconsola();
+                cout << "Select the amount of social media apps you want to post in" << endl;
+                    int amount = pedirNumero("Amount: ");
+                    if (amount < 1 || amount > 7){
+                        cout << "Option unavailable, please select a valid option" << endl;
+                        continuar();
+                        break;
+                }
                 else{
-                    postByFamily(option3, option4);
+                    postByFamily(countryname, lastname, amount);
                 }
                 break;
             case 4:
@@ -410,13 +427,13 @@ void menuFamilyPost(){
 }
 
 void DemonOptions(){
-    cout << textoRojo(" (1) Sin = Lust") << endl;
-    cout << textoRojo(" (2) Sin = Gluttony") << endl;
-    cout << textoAzul(" (3) Sin = Greed") << endl;
-    cout << textoRojo(" (4) Sin = Sloth") << endl;
-    cout << textoRojo(" (5) Sin = Wrath")<< endl;
-    cout << textoRojo(" (6) Sin = Envy") << endl;
-    cout << textoRojo(" (7) Sin = Pride") << endl;
+    cout << textoRojo(" (1) ASMODEO = Sin = Lust") << endl;
+    cout << textoRojo(" (2) BELFEGOR = Sin = Gluttony") << endl;
+    cout << textoAzul(" (3) MAMMON = Sin = Greed") << endl;
+    cout << textoRojo(" (4) ABADON = Sin = Sloth") << endl;
+    cout << textoRojo(" (5) SATAN = Sin = Wrath")<< endl;
+    cout << textoRojo(" (6) BELCEBU = Sin = Envy") << endl;
+    cout << textoRojo(" (7) LUCIFER = Sin = Pride") << endl;
 }	
 
 void menuHell(){
@@ -455,7 +472,7 @@ void menuHeaven(){
             case 1:{
                 limpiarConsola();
                 cout << textoAzul("Heaven") << endl;
-                //Function to print heaven
+                //printHeaven();
                 break;
             }
             case 2:
@@ -466,54 +483,60 @@ void menuHeaven(){
     }
 }
 
-void menuHuman(){
+void menuHuman() {
     int opcion = 0;
-    while (opcion != 3){
+    string namedecision;  // Declare the variables here
+    string lastNamedecision;
+
+    while (opcion != 3) {
         limpiarConsola();
         cout << textoAzul("Human Menu") << endl;
         cout << " (1) Search Human through ID" << endl;
         cout << " (2) Search Human through Name and Last Name" << endl;
         cout << " (3) Return to Main Menu  " << endl;
         opcion = pedirNumero("Selection: ");
-        switch (opcion){
+
+        switch (opcion) {
             case 1:
                 limpiarConsola();
                 cout << textoAzul("Human ID") << endl;
                 int id = pedirNumero("ID: ");
-                if (id < 0 || id > 1000000){
+                if (id < 0 || id > 1000000) {
                     cout << "ID out of range" << endl;
                     continuar();
                     break;
                 }
-                if (searchHumanByID(id) = NULL){
+                if (searchHumanByID(id) == NULL) {
                     cout << "User not found" << endl;
                     continuar();
                     break;
                 }
-                else{
+                else {
                     searchHumanByID(id)->print();
                 }
                 break;
+
             case 2:
                 limpiarConsola();
                 cout << textoAzul("Human Name and Last Name") << endl;
-                
-                string name = pedirString("Name: ");
+                namedecision = pedirString("Name: ");  // Initialize the variables here
                 continuar();
                 LastnameOptions();
-                string lastName = pedirString("Last Name: ");
-                if (searchHumanByName(name, lastName) = NULL){
+                lastNamedecision = pedirString("Last Name: ");
+                if (searchHumanByName(namedecision, lastNamedecision) == NULL) {
                     cout << "User not found" << endl;
                     continuar();
                     break;
                 }
-                else{
-                    searchHumanByName(name, lastName)->print();
+                else {
+                    searchHumanByName(namedecision, lastNamedecision)->print();
                 }
                 continuar();
                 break;
+
             case 3:
                 return;
+
             default:
                 cout << "Option unavailable, please select a valid option" << endl;
         }
@@ -535,13 +558,20 @@ void menuWinner(){
             case 1: 
                 limpiarConsola();
                 cout << textoAzul("Winner") << endl;
-                //Function to print winner
+                CalculateWinner();
                 continuar();
                 break;
             case 2: 
                 limpiarConsola();
                 cout << textoAzul("Total of humans") << endl;
-                //Function to print total of humans
+                int aliveCount = CountAlive();
+                int heavenCount = CountHeaven();
+                int hellCount = CountHell();
+                cout << "Alive: " << textoVerde(to_string(aliveCount)) << endl;
+                cout << "Heaven: " << textoAzul(to_string(heavenCount)) << endl;
+                cout << "Hell: " << textoRojo(to_string(hellCount)) << endl;
+                cout << "Total of humans: " << (aliveCount + heavenCount + hellCount) << endl;
+                continuar();
                 break;
             case 3:
                 return;
@@ -552,7 +582,55 @@ void menuWinner(){
     }
 }
 
+void CalculateWinner(){
+    if (CountHeaven() > CountHell()){
+        cout << "Heaven won the battle" << endl;
+    }
+    else if (CountHeaven() < CountHell()){
+        cout << "Hell won the battle" << endl;
+    }
+    else{
+        cout << "It was a tie" << endl;
+    }
+}
 
+int Countalive(){
+    int aliveamount = 0;
+    for (int i = 0; i < 1000000; i++){
+        if (searchHumanByID(i) != NULL){
+            if (searchHumanByID(i)->state == "ALIVE"){
+                aliveamount++;
+            }
+        }
+    }
+    cout << "Alive: " << aliveamount << endl;
+
+}
+int CountHeaven(){
+    int heavenamount = 0;
+    for (int i = 0; i < 1000000; i++){
+        if (searchHumanByID(i) != NULL){
+            if (searchHumanByID(i)->state == "HEAVEN"){
+                heavenamount++;
+            }
+        }
+    }
+    cout << "Heaven: " << heavenamount << endl;
+
+}
+
+int CountHell(){
+    int hellamount = 0;
+    for (int i = 0; i < 1000000; i++){
+        if (searchHumanByID(i) != NULL){
+            if (searchHumanByID(i)->state == "HELL"){
+                hellamount++;
+            }
+        }
+    }
+    cout << "Hell: " << hellamount << endl;
+    return hellamount;
+}
 
 void menuDemons(){
     int opcion = 0;
@@ -568,7 +646,7 @@ void menuDemons(){
             case 1:
                 limpiarConsola();
                 cout << textoRojo("Demons") << endl;
-                //Function to print demons
+                DemonOptions();
                 continuar();
                 break;
             case 2: 
@@ -589,6 +667,7 @@ void menuDemons(){
         }
     }
 }
+
 
 
 
@@ -625,7 +704,6 @@ int verifyIntPositive(string number){
         return -1;
     }
 }
-
 double verifyDoublePositive(string number){
     try
     {

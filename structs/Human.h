@@ -9,6 +9,7 @@
 #include "LifeTree.h"
 // Prototypes
 Human * searchHumanByID(int id);
+Human * searchHumanByName(string name, string lastName);
 int generateRandomNumber(int to);
 int generateUniqueID();
 bool humanityCompleted();
@@ -18,6 +19,7 @@ int humansCanBeFriends(Human * humanBase, Human * possibleFriend);
 int calculateFriendshipScore(Human* humanBase, Human* possibleFriend);
 void fillLifeTree(int array[], int from, int to);
 int generateLifeTree();
+
 
 // Structs
 struct Human{
@@ -175,6 +177,13 @@ Human * searchHumanByID(int id){
             return humanity[i];
     return NULL;
     
+}
+
+Human * searchHumanByName(string name, string lastName){
+    for (int i = 0; i < humanitySize; i++)
+        if(humanity[i] != NULL && humanity[i]->name == name && humanity[i]->lastName == lastName)
+            return humanity[i];
+    return NULL;
 }
 
 int generateRandomNumber(int to){

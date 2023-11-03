@@ -109,13 +109,9 @@ struct AngelTree {
                    calculateAngelVersion(root->rightAngel, name, generation);
     }
     }
-    Human * HumanSaved(){
-        
-    }
-
 
    void addNewAngelLevel() {
-        if (root == nullptr) {
+        if (root == NULL) {
             insertAngel(root);
         } else {
             int currentAngels = countAngels(root);
@@ -126,59 +122,183 @@ struct AngelTree {
             }
         }
     }
+    void findHuman(){
+        
+    }
+};
+
+//Necesito agregar un puntero mas al humano (el humano tiene acceso al angel que lo salvo)......
+
+struct HeavenHashNode {
+    int id;
+    HeavenHashNode* leftNode;
+    HeavenHashNode* rightNode;
+    Human* human;
+    int height;
+
+    HeavenHashNode(int _id) {
+        id = _id;
+        leftNode = rightNode = NULL;
+        height = 1;
+    }
+};
+
+struct HashTree {
+    HeavenHashNode* root;
+
+    HashTree() {
+        root = NULL;
+    }
+
+    int getHeight(HeavenHashNode* node) {
+        if (node == NULL)
+            return 0;
+        return node->height;
+    }
+
+    int getBalanceFactor(HeavenHashNode* node) {
+        if (node == NULL)
+            return 0;
+        return getHeight(node->leftNode) - getHeight(node->rightNode);
+    }
+
+    HeavenHashNode* rightRotate(HeavenHashNode* y) {
+        HeavenHashNode* x = y->leftNode;
+        HeavenHashNode* T2 = x->rightNode;
+
+        x->rightNode = y;
+        y->leftNode = T2;
+
+        y->height = std::max(getHeight(y->leftNode), getHeight(y->rightNode)) + 1;
+        x->height = std::max(getHeight(x->leftNode), getHeight(x->rightNode)) + 1;
+
+        return x;
+    }
+
+    HeavenHashNode* leftRotate(HeavenHashNode* x) {
+        HeavenHashNode* y = x->rightNode;
+        HeavenHashNode* T2 = y->leftNode;
+
+        y->leftNode = x;
+        x->rightNode = T2;
+
+        x->height = std::max(getHeight(x->leftNode), getHeight(x->rightNode)) + 1;
+        y->height = std::max(getHeight(y->leftNode), getHeight(y->rightNode)) + 1;
+
+        return y;
+    }
+
+    HeavenHashNode* insertAuxHash(int id, HeavenHashNode* node) {
+        if (node == NULL)
+            return new HeavenHashNode(id);
+
+        if (id < node->id)
+            node->leftNode = insertAuxHash(id, node->leftNode);
+        else if (id > node->id)
+            node->rightNode = insertAuxHash(id, node->rightNode);
+        else
+            return node; // Duplicate nodes are not allowed
+
+        node->height = 1 + std::max(getHeight(node->leftNode), getHeight(node->rightNode));
+
+        int balance = getBalanceFactor(node);
+
+        // Left Heavy
+        if (balance > 1) {
+            if (id < node->leftNode->id) {
+                return rightRotate(node);
+            }
+            else {
+                node->leftNode = leftRotate(node->leftNode);
+                return rightRotate(node);
+            }
+        }
+
+        // Right Heavy
+        if (balance < -1) {
+            if (id > node->rightNode->id) {
+                return leftRotate(node);
+            }
+            else {
+                node->rightNode = rightRotate(node->rightNode);
+                return leftRotate(node);
+            }
+        }
+
+        return node;
+    }
+
+    void insertHash(int id) {
+        root = insertAuxHash(id, root);
+    }
+
+    void inOrder(HeavenHashNode* node) {
+        if (node == NULL)
+            return;
+
+        inOrder(node->leftNode);
+        cout << "Human Info"<< endl;
+        cout << node->id << " "; // Print the id of the node
+        node->human->print(); // Print the human object (Esta vara deberia ir bien)
+        cout << "----------------------------------------------------------------------------------------" << endl;
+        inOrder(node->rightNode);
+
+    }
+
+    void printInOrder() {
+        inOrder(root);
+        cout << endl;
+    }
+
+    Human* searchHuman(int id) {
+        HeavenHashNode* current = root;
+        while (current != NULL) {
+            if (current->id == id) {
+                return current->human;
+            }
+            else if (current->id > id) {
+                current = current->leftNode;
+            }
+            else {
+                current = current->rightNode;
+            }
+        }
+        return NULL;
+    }
 };
 
 
-const int TABLE_SIZE = 1000;
+struct HashTable {
 
+    static const int size = 1000; // Size of the hash table
+    HashTree * table[size]; // Array of trees
 
-/*struct HashTable {
+    HashTable() {
+        // Initialize the hash table
+        for (int i = 0; i < size; i++) {
+            table[i] = new HashTree();
+        }
+    }
 
-    list<AngelNode*> table[TABLE_SIZE];
+    void printHeaven() {
+    for (int i = 0; i < size; i++) {
+        std::cout << "Bucket " << i << ":\n";
+        table[i]->printInOrder();
+        cout << "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ "<< endl;
+    }
+    }
+    
+    void insertHuman(Human* human) {
+        int index = hashFunction(human->id); // Determine the index for the given Human object.
+        table[index]->insertHash(human->id); // Insert the Human ID into the corresponding balanced tree.
+    }
+
+    /*void* searchHumanPrint(int id) {
+        int index = hashFunction(id);
+        table[index]->searchHuman(id)->print();
+    }*/
 
     int hashFunction(int id) {
-        return id % TABLE_SIZE;
+        return id % size;
     }
-
-    void insertTreeNode(AngelNode* node, int index) {
-        table[index].push_back(node);
-    }
-
-    AngelNode* searchTreeNode(int id, int index) {
-        for (auto node : table[index]) {
-            if (node->angel->savedHuman->id == id) {
-                return node;
-            }
-        }
-        return nullptr;
-    }
-
-
-    AngelNode* searchHuman(int id) {
-        int index = hashFunction(id);
-        return searchTreeNode(id, index);
-    }
-
-    void displayBucket(int index) {
-        std::cout << "Bucket " << index << ":" << std::endl; // Use std::cout instead of cout.
-        for (auto node : table[index]) {
-            displayInOrder(node);
-        }
-    }
-
-    void displayInOrder(AngelNode* node) {
-        if (node) {
-            displayInOrder(node->leftAngel);
-            std::cout << "ID: " << node->angel->savedHuman->id << " Name: " << node->angel->savedHuman->name << std::endl; // Use std::cout instead of cout.
-            displayInOrder(node->rightAngel);
-        }
-    }
-
-    void displayTable() {
-        for (int i = 0; i < TABLE_SIZE; ++i) {
-            if (!table[i].empty()) {
-                displayBucket(i);
-            }
-        }
-    }
-};*/
+};
