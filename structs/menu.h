@@ -16,6 +16,7 @@ void menuHeaven();
 void menuHuman();
 void menuWinner();
 void menu();
+void menuFamily();
 void SocialMediaOptions();
 void BeliefOptions();
 void ProfessionOptions();
@@ -27,6 +28,8 @@ void CalculateWinner();
 int CountAlive();
 int CountHeaven();
 int CountHell();
+void printFamily(string countryname, string lastname);
+void insertInDescendingOrderHumanFamily(Human* humans[], int total, Human* human);
 
 void linea();
 void limpiarConsola();
@@ -131,16 +134,18 @@ void menu(){
                 limpiarConsola();
                 menuHeaven();
                 break;
-            case 7: // Picking
+            case 7:
                 limpiarConsola();
                 menuHuman();
                 break;
             case 8:
-                // Agregar codigo Empacador
                 limpiarConsola();
                 menuWinner();
                 break;
             case 9:
+                limpiarConsola();
+                menuFamily();
+            case 10:
                 return;
         }
         limpiarConsola();
@@ -184,7 +189,7 @@ void menuTree(){
         cout << " (1) Print amount of tree levels" << endl;
         cout << " (2) Print amount of nodes" << endl;
         cout << " (3) Print amount of humans in tree  " << endl;
-        cout << " (4) Print amount of humans ask  " << endl;
+        cout << " (4) Print amount of humans" << endl;
         cout << " (5) Return to Main Menu  " << endl;
         opcion = pedirNumero("Selection: ");
         switch (opcion){
@@ -192,7 +197,7 @@ void menuTree(){
                 limpiarConsola();
                 cout << textoAzul("Tree Levels") << endl;
                 cout << " Amount of tree levels" << endl;
-                //co
+                //cout << height() << endl;
                 break;
             case 2: // Print amount of nodes
                 limpiarConsola();
@@ -441,15 +446,15 @@ void menuHell(){
     while (opcion != 2){
         limpiarConsola();
         cout << textoAzul("Hell Menu") << endl;
-        cout << textoRojo(" (1) Condemn the sinners with a demon") << endl;
+        cout << textoRojo(" (1) Print Hell") << endl;
         cout << " (2) Return main menu  " << endl;
         opcion = pedirNumero("Selection: ");
         switch (opcion){
             case 1:
                 limpiarConsola();
-                cout << textoRojo("Demon of choice") << endl;
+                cout << textoRojo("Demons") << endl;
                 DemonOptions();
-                int option = pedirNumero("Selection: ");
+                continuar();
                 break;
             case 2:
                 return;
@@ -519,21 +524,21 @@ void menuHuman() {
             case 2:
                 limpiarConsola();
                 cout << textoAzul("Human Name and Last Name") << endl;
-                namedecision = pedirString("Name: ");  // Initialize the variables here
+                namedecision = pedirString("Name: "); 
                 continuar();
                 LastnameOptions();
                 lastNamedecision = pedirString("Last Name: ");
-                if (searchHumanByName(namedecision, lastNamedecision) == NULL) {
-                    cout << "User not found" << endl;
-                    continuar();
-                    break;
+                for (int i = 0; i < humanitySize; i++) {
+                    Human * human = searchHumanByID(i);
+                    if (human!= NULL) {
+                        if (human->name == namedecision && human->lastName == lastNamedecision) {
+                            human->print();
+                        }
+                    }
                 }
-                else {
-                    searchHumanByName(namedecision, lastNamedecision)->print();
-                }
+                cout << "User not found, try again" << endl;
                 continuar();
                 break;
-
             case 3:
                 return;
 
@@ -596,7 +601,7 @@ void CalculateWinner(){
 
 int Countalive(){
     int aliveamount = 0;
-    for (int i = 0; i < 1000000; i++){
+    for (int i = 0; i < humanitySize; i++){
         if (searchHumanByID(i) != NULL){
             if (searchHumanByID(i)->state == "ALIVE"){
                 aliveamount++;
@@ -608,7 +613,7 @@ int Countalive(){
 }
 int CountHeaven(){
     int heavenamount = 0;
-    for (int i = 0; i < 1000000; i++){
+    for (int i = 0; i < humanitySize; i++){
         if (searchHumanByID(i) != NULL){
             if (searchHumanByID(i)->state == "HEAVEN"){
                 heavenamount++;
@@ -621,7 +626,7 @@ int CountHeaven(){
 
 int CountHell(){
     int hellamount = 0;
-    for (int i = 0; i < 1000000; i++){
+    for (int i = 0; i < humanitySize; i++){
         if (searchHumanByID(i) != NULL){
             if (searchHumanByID(i)->state == "HELL"){
                 hellamount++;
@@ -629,7 +634,6 @@ int CountHell(){
         }
     }
     cout << "Hell: " << hellamount << endl;
-    return hellamount;
 }
 
 void menuDemons(){
@@ -651,8 +655,8 @@ void menuDemons(){
                 break;
             case 2: 
                 limpiarConsola();
-                cout << textoRojo("Human Sinners") << endl;
-                //Function to print human sinners
+                cout << textoRojo("Human Sinners per Demon") << endl;
+                //Function to print sinners per demon
                 break;
             case 3: 
                 limpiarConsola();
@@ -668,8 +672,110 @@ void menuDemons(){
     }
 }
 
+void menuFamily(){
+    int opcion = 0;
+    string lastname;
+    string countryname;
+    while (opcion != 2){
+        limpiarConsola();
+        cout << textoAzul("Family Menu") << endl;
+        cout << " (1) Print Family" << endl;
+        cout << " (2) Return to Main Menu  " << endl;
+        opcion = pedirNumero("Selection: ");
+        switch (opcion){
+            case 1:
+                limpiarConsola();
+                cout << textoAzul("Which Family") << endl;
+                cout << "Select the family you want to print" << endl;
+                CountryOptions();
+                countryname = pedirString("Selection: ");
+                if (countryname != "USA" && countryname != "Canada" && countryname != "Australia" && countryname != "France" && countryname != "Germany" && countryname != "Brazil" && countryname != "Argentina" && countryname != "Spain" && countryname != "Italy" && countryname != "Singapore" && countryname != "Sweden" && countryname != "Belgium" && countryname != "New Zealand" && countryname != "Monaco"){
+                    cout << "Option unavailable, please select a valid option" << endl;
+                    continuar();
+                    break;
+                }
+                cout << "Select the last name you want to print" << endl;
+                LastnameOptions();
+                lastname = pedirString("Last Name: ");
+                if (lastname != "Castillo" && lastname != "Montenegro" && lastname != "Valencia" && lastname != "Delgado" && lastname != "Rivera" && lastname != "Serrano" && lastname != "Alarcón" && lastname != "Mendoza" && lastname != "Vargas" && lastname != "Herrera" && lastname != "Roman" && lastname != "Paredes"){
+                    cout << "Option unavailable, please select a valid option" << endl;
+                    continuar();
+                    break;
+                }
+                printFamily(countryname, lastname);
+                continuar();
+                break;
+            case 2:
+                return;
+            default:
+                cout << "Option unavailable, please select a valid option" << endl;
+                continuar();
+        }
+    }
 
+}
 
+void insertInDescendingOrderHumanFamily(Human* humans[], int total, Human* human) {
+    int i = total - 1; // Start from the end of the array
+    int humanSins = human->addSins();
+    
+    while (i >= 0 && humanSins > humans[i]->addSins()) {
+        humans[i + 1] = humans[i]; // Shift elements to the right
+        i--;
+    }
+    
+    // Insert the new value at the correct position
+    humans[i + 1] = human;
+    //total++; Increment the length of the array
+}
+
+void printFamily(string countryname,string lastname){
+    int total = 0;
+    int alive = 0;
+    int heaven = 0;
+    int hell = 0;
+
+        // Create an array to store pointers to Human objects
+    Human* humanfamily[humanitySize];
+
+    // Initialize the array with NULL pointers
+    for (int i = 0; i < humanitySize; i++) {
+        humanfamily[i] = NULL;
+    }
+
+    for (int i = 0; i < humanitySize; i++){
+        if (searchHumanByID(i) != NULL){
+            if (searchHumanByID(i)->country == countryname && searchHumanByID(i)->lastName == lastname){
+
+                if (searchHumanByID(i)->state == "ALIVE"){
+                    alive++;
+                }
+                else if (searchHumanByID(i)->state == "HEAVEN"){
+                    heaven++;
+                }
+                else if (searchHumanByID(i)->state == "HELL"){
+                    hell++;
+                }
+                insertInDescendingOrderHumanFamily(humanfamily, total++, searchHumanByID(i));
+            }
+
+        }
+    }
+
+    cout << textoAzul("Family Stats")<< endl;
+    cout << "Total: " << total << endl;
+    cout << "Alive: " << alive << endl;
+    cout << "Heaven: " << heaven << endl;
+    cout << "Hell: " << hell << endl;
+    cout << "Alive Percentage: " << (alive/total)*100 << "%" << endl;
+    cout << "Heaven Percentage: " << (heaven/total)*100 << "%" << endl;
+    cout << "Hell Percentage: " << (hell/total)*100 << "%" << endl;
+
+    cout << textoAzul("Family Members") << endl;
+    for (int i = 0; i < total; i++) {
+        humanfamily[i]->print();
+    }
+}
 
 // Funciones secundarias
 

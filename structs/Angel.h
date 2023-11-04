@@ -13,6 +13,10 @@ enum AngelName {
     Uriel,
     Azrael,
     Sariel,
+    God,
+    Seraphim, 
+    Cherubim,
+    Thrones,
     NumAngelNames
 };
 
@@ -42,6 +46,7 @@ struct AngelTree {
 
     AngelTree() {
         root = NULL;
+        //generation = 0;
     }
 
     int countAngels(AngelNode* node) {
@@ -57,11 +62,32 @@ struct AngelTree {
     }
 
     AngelName getRandomAngelName() {
-        // Generate a random angel name within the valid range.
-        return static_cast<AngelName>(rand() % NumAngelNames);
+        return static_cast<AngelName>(rand() % (NumAngelNames-4));
     }
-    void insert (){
-        root = insertAngel(root);
+
+    void inserttotal(){
+        if (root == NULL){
+            insertInitialAngels();
+        }
+        else{
+            addNewAngelLevel();
+        }
+    }
+
+    void insertInitialAngels() {
+        root = new AngelNode(); // Create a root node without an angel.
+        root->angel = new Angel(God, 0, 0, NULL);
+
+
+        root->leftAngel = new AngelNode();
+        root->leftAngel->angel = new Angel(Seraphim, 0, 1, NULL);
+
+        root->middleAngel = new AngelNode();
+        root->middleAngel->angel = new Angel (Cherubim, 0, 1, NULL);
+
+        root->rightAngel = new AngelNode();
+        root->rightAngel->angel = new Angel (Thrones, 0, 1, NULL);
+
     }
 
     AngelNode * insertAngel(AngelNode* node) {
@@ -70,9 +96,10 @@ struct AngelTree {
             AngelName randomName = getRandomAngelName();  // Choose a random angel name.
             int calculatedVersion = calculateAngelVersion(root, randomName, generation); // Calculate version per name.
             int calculatedGeneration = getHeight(root); // Calculate generation.
-            //Angel* newAngel = new Angel(randomName, calculatedVersion , calculatedGeneration, savedHuman);
+            Human* savedHuman = findHuman(node->angel); // Find the human to save.
+            Angel* newAngel = new Angel(randomName, calculatedVersion , calculatedGeneration, savedHuman);
             node = new AngelNode();
-            //node->angel = newAngel;
+            node->angel = newAngel;
             return;
         }
 
@@ -111,19 +138,44 @@ struct AngelTree {
     }
 
    void addNewAngelLevel() {
-        if (root == NULL) {
-            insertAngel(root);
-        } else {
             int currentAngels = countAngels(root);
             int angelsToAdd = 3 * currentAngels;
 
             for (int i = 0; i < angelsToAdd; i++) {
                 insertAngel(root);
             }
-        }
+        //generation++;
     }
-    void findHuman(){
-        
+
+    Human * findHuman(Angel * angel){
+        Human * humans[humanitySize];
+        int sinneramount;
+        Human * sinner = NULL;
+        for (int i = 0; i < humanitySize; i++){
+            if (humanity[i] != NULL && humanity[i]->state == "HELL"){
+                sinneramount = addallSins(humanity[i]);
+                if (sinner == NULL){
+                    sinner = humanity[i];
+                }
+                else if (sinneramount > addallSins(sinner)) {
+                    sinner = humanity[i];
+                }
+            }         
+        }
+        sinner->state = "HEAVEN";
+        sinner->saviorAngel = angel;
+        return sinner;    
+        }
+
+    int addallSins(Human * human){
+        int sinamountTotal = 0;
+        for (int i = 0; i < humanitySize; i++){
+            if (humanity[i] != NULL){
+                sinamountTotal += humanity[i]->addSins();
+            }
+
+        }
+        return sinamountTotal;    
     }
 };
 
