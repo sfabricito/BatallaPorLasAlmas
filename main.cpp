@@ -12,13 +12,20 @@ int main(int argc, char const *argv[])
     initializeData();
     lifeTree = new Tree();
     createDemons();
-    //generateGeneration(1000);
+    hellRecord = new Record("Data/hellLog.txt");
+    heavenRecord = new Record("Data/heavenLog.txt");
+    generateGeneration(1000);
    // generateGeneration(500);
    // generateGeneration(500);
    // generateGeneration(500);
    // generateGeneration(500);
     
-    //inOrder(lifeTree->root);
+    // inOrder(lifeTree->root);
+
+    //     string option;
+    // getline(cin, option);
+
+    // humanity[stoi(option)]->print();
     //cout << height(lifeTree->root) << endl;
     //postByProfession("Engineer", 2); 
     //postByProfession("Doctor", 3);    
@@ -40,7 +47,7 @@ void test(){
     demon->families[4] = new Family("Australia", "Roman");
     demon->families[4]->totalSins = 1;
 
-        humanity[1] = new Human(1, 1, "ALIVE", "Francisco", "Serrano", "Canada", "Hinduism", "Engineer");  
+    humanity[1] = new Human(1, 1, "ALIVE", "Francisco", "Serrano", "Canada", "Hinduism", "Engineer");  
     humanity[1]->sins[3] = 110;
     humanity[0] = new Human(0, 1, "ALIVE", "Rosa", "Rivera", "Canada", "Hinduism", "Engineer");   
     humanity[0]->sins[3] = 100;
