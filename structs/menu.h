@@ -201,18 +201,19 @@ void menuTree(){
                 limpiarConsola();
                 cout << textoAzul("Tree Levels") << endl;
                 cout << " Amount of tree levels" << endl;
-                //cout << height() << endl;
+                //cout << tree->height() << endl;
                 break;
             case 2: // Print amount of nodes
                 limpiarConsola();
                 cout << textoAzul("Tree Nodes") << endl;;
                 cout << " Amount of nodes" << endl;
-                //cout << countNodes() << endl;//Corregir
+                //cout << tree->countNodes() << endl;//Corregir
                 break;
             case 3: // Print amount of humans
                 limpiarConsola();
                 cout << textoAzul("Humans in Tree") << endl;;
-                // Funcion to print amount of humans in tree
+                cout << " Amount of humans in tree" << endl;
+                //cout << tree->countHumans() << endl;//Corregir
                 break;
             case 4: // Print humans ask teacher
                 limpiarConsola();
@@ -483,7 +484,7 @@ void menuHeaven(){
             case 1:{
                 limpiarConsola();
                 cout << textoAzul("Heaven") << endl;
-                //printHeaven();
+                //heaventree->printHeaven();
                 break;
             }
             case 2:
@@ -645,6 +646,9 @@ int CountHell(){
 
 void menuDemons(){
     int opcion = 0;
+    string optiondemon;
+    Demon* demonchoosen;
+
     while (opcion != 4){
         limpiarConsola();
         cout << textoAzul("Demon Menu") << endl;
@@ -663,12 +667,33 @@ void menuDemons(){
             case 2: 
                 limpiarConsola();
                 cout << textoRojo("Human Sinners per Demon") << endl;
-                //Function to print sinners per demon
+                DemonOptions();
+                continuar();
+                optiondemon = pedirString("Selection: ");
+                if (optiondemon != "ASMODEO" && optiondemon != "BELFEGOR" && optiondemon != "MAMMON" && optiondemon != "ABADON" && optiondemon != "SATAN" && optiondemon != "BELCEBU" && optiondemon != "LUCIFER"){
+                    cout << "Option unavailable, please select a valid option" << endl;
+                    continuar();
+                    break;
+                }
+                demonchoosen = searchDemonByName(optiondemon);
+                calculateMaximumSinsAmongAllIndividuals(demonchoosen);
+                calculateMinimumSinsAmongAllIndividuals(demonchoosen);
+                calculateAverageSinsAmongAllIndividuals(demonchoosen);
+                continuar();
                 break;
             case 3: 
                 limpiarConsola();
                 cout << textoRojo("List of sinners") << endl;
-                //Demon->printFamilies();
+                DemonOptions();
+                continuar();
+                optiondemon = pedirString("Selection: ");
+                if (optiondemon != "ASMODEO" && optiondemon != "BELFEGOR" && optiondemon != "MAMMON" && optiondemon != "ABADON" && optiondemon != "SATAN" && optiondemon != "BELCEBU" && optiondemon != "LUCIFER"){
+                    cout << "Option unavailable, please select a valid option" << endl;
+                    continuar();
+                    break;
+                }
+                demonchoosen = searchDemonByName(optiondemon);
+                demonchoosen->printFamilies();
                 break;
             case 4:
                 return;
@@ -694,7 +719,7 @@ int calculateMaximumSinsAmongAllIndividuals(Demon* demon) {
             }
         }
     }
-
+    cout << "Maximum sins: " << maxSins << endl;
     return maxSins;
 }
 int calculateMinimumSinsAmongAllIndividuals(Demon* demon) {
@@ -712,7 +737,7 @@ int calculateMinimumSinsAmongAllIndividuals(Demon* demon) {
             }
         }
     }
-
+    cout << "Minimum sins: " << minSins << endl;
     return minSins;
 }
 float calculateAverageSinsAmongAllIndividuals(Demon* demon) {
@@ -732,7 +757,9 @@ float calculateAverageSinsAmongAllIndividuals(Demon* demon) {
     }
 
     if (totalIndividuals > 0) {
+        cout << "Average sins: " << static_cast<float>(totalSins) / totalIndividuals << endl;
         return static_cast<float>(totalSins) / totalIndividuals;
+
     } else {
         // Handle the case when there are no individuals under the demon's control.
         // You can return 0 or some other suitable value.
