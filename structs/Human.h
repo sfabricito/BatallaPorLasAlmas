@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <unistd.h>
 #include "LifeTree.h"
+
 // Prototypes
 Human * searchHumanByID(int id);
 Human * searchHumanByName(string name, string lastName);
@@ -19,7 +20,6 @@ int humansCanBeFriends(Human * humanBase, Human * possibleFriend);
 int calculateFriendshipScore(Human* humanBase, Human* possibleFriend);
 void fillLifeTree(int array[], int from, int to);
 int generateLifeTree();
-
 
 // Structs
 struct Human{

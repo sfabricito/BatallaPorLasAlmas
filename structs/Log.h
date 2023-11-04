@@ -1,6 +1,8 @@
 // Includes
 #include "Post.h"
 
+// Prototypes
+string changeEmptySpacesUnderscores(string text);
 
 struct Log{
     Human * human;
@@ -16,11 +18,11 @@ struct Log{
 struct Record{
     Log * logs[humanitySize];
     int totalLogs;
-    string fileRoute;
+    string filename;
 
-    Record(string _fileRoute){
+    Record(string _filename){
         totalLogs = 0;
-        fileRoute = _fileRoute;
+        filename = _filename;
         for (int i = 0; i < humanitySize; i++)
             logs[i] = NULL;
     }
@@ -30,9 +32,9 @@ struct Record{
     }
 
     void generateFile(){
-        ofstream file(fileRoute);
+        ofstream file(filename);
         if (!file.is_open()) {
-            cout << "Error opening log file with route: " + fileRoute << endl;
+            cout << "Error opening log file with route: " + filename << endl;
             return;
         }
         for (int i = 0; i < totalLogs; i++)
@@ -55,4 +57,27 @@ struct Record{
             file << logInfo;
         }
     }
+
+    void sendRecord(string emailSubject, string emailBody){
+        string subjectWithSpaces = changeEmptySpacesUnderscores(emailSubject);
+        const char* subject = subjectWithSpaces.c_str();
+        
+        string bodyWithSpaces = changeEmptySpacesUnderscores(emailBody);
+        const char* body = bodyWithSpaces.c_str();
+        
+        const char* _filename = (filename).c_str();
+
+        char command[500];
+        std::snprintf(command, sizeof(command), "python3 Mail/sendMail.py %s %s %s", subject, body, _filename);
+        std::system(command);
+    }
 };
+
+string changeEmptySpacesUnderscores(string text){
+    for (size_t i = 0; i < text.length(); i++) {
+        if (text[i] == ' ') {
+            text[i] = '_';
+        }
+    }
+    return text;
+}
