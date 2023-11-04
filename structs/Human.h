@@ -35,6 +35,7 @@ struct Human{
     int sins[7];
     Human * friends[100];
     int socialMediaPriority[7];
+    Angel * saviorAngel;
 
     Human(int _id, int _generation, string _state, string _name, string _lastName, string _country, string _belief, string _profession){
         id = _id;
@@ -53,6 +54,7 @@ struct Human{
         }
         for (int i = 0; i < 7; i++)
             socialMediaPriority[i] = generateRandomNumber(100);
+        saviorAngel = NULL;
     }
     void print(){
         cout << "ID: " << id << endl;

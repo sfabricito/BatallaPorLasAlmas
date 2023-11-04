@@ -8,6 +8,8 @@ using namespace std;
 // Structs
 struct Human;
 struct Tree;
+struct Demon;
+struct Angel;
 
 // Variables
 const int humanitySize = 100000;
@@ -15,15 +17,18 @@ const int lastNamesSize = 12;
 const int countriesSize = 14;
 int generation = 0;
 
-Human * humanity[humanitySize];
 Tree * lifeTree;
 
 // Arrays
+Human * humanity[humanitySize];
+Demon * demons[7];
+
 string names[1000];
 string lastNames[lastNamesSize];
 string countries[countriesSize];
 string beliefs[5];
 string professions[12];
+
 const string socialMedia[] = {
     "TWITTER", // anger
     "INSTAGRAM",
@@ -43,7 +48,7 @@ const string deadlySins[] = {
     "ARROGANCE" // arrogancia
 };
 
-const string demons[] = {
+const string demonsTemplate[] = {
     "ASMODEO", // lujuria
     "BELFEGOR", // glotonería
     "MAMMON", // avaricia
