@@ -1,5 +1,5 @@
 // Imports
-#include "Post.h"
+#include "Log.h"
 
 // Prototypes
 struct Demon;
@@ -9,6 +9,7 @@ void insertInOrderHumans(Demon * demon, Human * arr[], Human * human, int capaci
 void insertInDescendingOrderHumans(Demon* demon, Human* humans[], int length, Human* human);
 int searchIndexHigherSinByHuman(int id);
 Demon * searchDemonByName(string demonName);
+string generateMessage(int sins, string sin, string demon);
 
 // Structs
 struct Family{
@@ -133,6 +134,7 @@ void condemnHumans(string demonName){
         if (humanity[i] != NULL && searchIndexHigherSinByHuman(i) == demonID){
             Human * human = searchHumanByID(i);
             human->state == "HELL";
+            hellRecord->insertLog(human, generateMessage(human->sins[searchIndexHigherSinByHuman(i)], deadlySins[searchDemonIndex(demonName)] ,demonName));
             insertInDescendingOrderHumans(demon, humans, counter++, human);
         }  
     }
@@ -183,4 +185,21 @@ Demon * searchDemonByName(string demonName){
         if (demons[i]->type == demonName)
             return demons[i];
     return NULL;
+}
+
+string generateMessage(int sins, string sin, string demon){
+    string message = "dead on ";
+    auto currentTime = std::chrono::system_clock::now();
+    time_t time = std::chrono::system_clock::to_time_t(currentTime);
+    std::tm* timeinfo = std::localtime(&time);
+    if (timeinfo) {
+        std::stringstream ss;
+        ss << std::put_time(timeinfo, "%Y-%m-%d %H:%M:%S");
+        message += ss.str();
+    }
+    message += "sentenced by " + sins;
+    message += " sins of " + sin;
+    message += " by " + demon;
+    message += " demon.";
+    return message;
 }

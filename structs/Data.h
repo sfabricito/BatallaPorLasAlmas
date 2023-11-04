@@ -10,6 +10,7 @@ struct Human;
 struct Tree;
 struct Demon;
 struct Angel;
+struct Record;
 
 // Variables
 const int humanitySize = 100000;
@@ -18,6 +19,8 @@ const int countriesSize = 14;
 int generation = 0;
 
 Tree * lifeTree;
+Record * hellRecord;
+Record * heavenRecord;
 
 // Arrays
 Human * humanity[humanitySize];
