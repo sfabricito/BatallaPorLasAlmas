@@ -661,7 +661,7 @@ void menuDemons(){
             case 3: 
                 limpiarConsola();
                 cout << textoRojo("List of sinners") << endl;
-                //Function to print list of sinners
+                //Demon->printFamilies();
                 break;
             case 4:
                 return;

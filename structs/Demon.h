@@ -37,6 +37,15 @@ struct Family{
         }
         return NULL;
     }
+    void print(){
+        for (int i = 0; i < humanitySize; i++)
+        {
+            if (humans[i] == NULL)
+                break;
+            humans[i]->print();
+        }
+        
+    }
 };
 struct Demon{
     string type;
@@ -49,15 +58,21 @@ struct Demon{
         for (int i = 0; i < (lastNamesSize * countriesSize); i++)
             families[i] = NULL;
     }
-
+    void calculateMaximum(){}
     void printFamilies(){
         for (int i = 0; i < (lastNamesSize * countriesSize); i++)
         {
             if (families[i] != NULL)
             {
+                cout << "Family: " << i << endl;
                 cout << "Country: " << families[i]->country << endl;
                 cout << "Last Name: " << families[i]->lastName << endl;
                 cout << "Total Sins: " << families[i]->totalSins << endl;
+                cout << "Humans: " << endl;
+                cout << "-----------------------" << endl;
+                families[i]->print();
+                
+
             }
         }
     }
