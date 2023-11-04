@@ -30,6 +30,9 @@ int CountHeaven();
 int CountHell();
 void printFamily(string countryname, string lastname);
 void insertInDescendingOrderHumanFamily(Human* humans[], int total, Human* human);
+int calculateMaximumSinsAmongAllIndividuals(Demon* demon);
+int calculateMinimumSinsAmongAllIndividuals(Demon* demon);
+float calculateAverageSinsAmongAllIndividuals(Demon* demon);
 
 void linea();
 void limpiarConsola();
@@ -673,6 +676,67 @@ void menuDemons(){
                 cout << "Option unavailable, please select a valid option" << endl;
                 continuar();
         }
+    }
+}
+// Create a standalone function to calculate the maximum sins among all individuals
+int calculateMaximumSinsAmongAllIndividuals(Demon* demon) {
+    int maxSins = 0; // Initialize with a very small value
+
+    for (int i = 0; i < lastNamesSize * countriesSize; i++) {
+        if (demon->families[i] != NULL) {
+            for (int j = 0; j < humanitySize; j++) {
+                if (demon->families[i]->humans[j] != NULL) {
+                    int sinsAmount = demon->families[i]->humans[j]->addSins();
+                    if (sinsAmount > maxSins) {
+                        maxSins = sinsAmount;
+                    }
+                }
+            }
+        }
+    }
+
+    return maxSins;
+}
+int calculateMinimumSinsAmongAllIndividuals(Demon* demon) {
+    int minSins = 1000; // Initialize with a very large value
+
+    for (int i = 0; i < lastNamesSize * countriesSize; i++) {
+        if (demon->families[i] != NULL) {
+            for (int j = 0; j < humanitySize; j++) {
+                if (demon->families[i]->humans[j] != NULL) {
+                    int sinsAmount = demon->families[i]->humans[j]->addSins();
+                    if (sinsAmount < minSins) {
+                        minSins = sinsAmount;
+                    }
+                }
+            }
+        }
+    }
+
+    return minSins;
+}
+float calculateAverageSinsAmongAllIndividuals(Demon* demon) {
+    int totalSins = 0;
+    int totalIndividuals = 0;
+
+    for (int i = 0; i < lastNamesSize * countriesSize; i++) {
+        if (demon->families[i] != NULL) {
+            for (int j = 0; j < humanitySize; j++) {
+                if (demon->families[i]->humans[j] != NULL) {
+                    int sinsAmount = demon->families[i]->humans[j]->addSins();
+                    totalSins += sinsAmount;
+                    totalIndividuals++;
+                }
+            }
+        }
+    }
+
+    if (totalIndividuals > 0) {
+        return static_cast<float>(totalSins) / totalIndividuals;
+    } else {
+        // Handle the case when there are no individuals under the demon's control.
+        // You can return 0 or some other suitable value.
+        return 0.0f;
     }
 }
 

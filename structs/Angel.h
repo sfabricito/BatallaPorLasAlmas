@@ -354,3 +354,20 @@ struct HashTable {
         return id % size;
     }
 };
+
+string generateMessage(int sins, string sin, string Angel){
+    string message = "Saved on ";
+    auto currentTime = std::chrono::system_clock::now();
+    time_t time = std::chrono::system_clock::to_time_t(currentTime);
+    std::tm* timeinfo = std::localtime(&time);
+    if (timeinfo) {
+        std::stringstream ss;
+        ss << std::put_time(timeinfo, "%Y-%m-%d %H:%M:%S");
+        message += ss.str();
+    }
+    message += "sentenced by " + sins;
+    message += " sins of " + sin;
+    message += " by " + Angel;
+    message += " demon.";
+    return message;
+}

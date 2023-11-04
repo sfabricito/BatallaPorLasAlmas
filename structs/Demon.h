@@ -59,7 +59,6 @@ struct Demon{
         for (int i = 0; i < (lastNamesSize * countriesSize); i++)
             families[i] = NULL;
     }
-    void calculateMaximum(){}
     void printFamilies(){
         for (int i = 0; i < (lastNamesSize * countriesSize); i++)
         {
@@ -203,3 +202,4 @@ string generateMessage(int sins, string sin, string demon){
     message += " demon.";
     return message;
 }
+
