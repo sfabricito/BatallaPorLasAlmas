@@ -164,6 +164,7 @@ struct AngelTree {
         }
         sinner->state = "HEAVEN";
         sinner->saviorAngel = angel;
+        heavenRecord->insertLog(sinner, generateMessage(sinneramount,angel->name,to_string(angel->generation)));
         return sinner;    
         }
 
@@ -355,7 +356,7 @@ struct HashTable {
     }
 };
 
-string generateMessage(int sins, string sin, string Angel){
+string generateMessage(int sins, AngelName angelsavename, string angelgeneration){
     string message = "Saved on ";
     auto currentTime = std::chrono::system_clock::now();
     time_t time = std::chrono::system_clock::to_time_t(currentTime);
@@ -365,9 +366,8 @@ string generateMessage(int sins, string sin, string Angel){
         ss << std::put_time(timeinfo, "%Y-%m-%d %H:%M:%S");
         message += ss.str();
     }
-    message += "sentenced by " + sins;
-    message += " sins of " + sin;
-    message += " by " + Angel;
-    message += " demon.";
+    message += "saved for " + sins;
+    message += " by " + angelsavename;
+    message += " generation" +  angelgeneration;
     return message;
 }
