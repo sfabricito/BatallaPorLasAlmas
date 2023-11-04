@@ -93,11 +93,12 @@ struct Human{
             }     
         }
     }
-
+    
     int addSins(){
         int sinsAmount = 0;
         for (int i = 0; i < 7; i++)
             sinsAmount += sins[i];
+        return sinsAmount;
     }
 };
 
@@ -187,6 +188,12 @@ Human * searchHumanByID(int id){
     
 }
 
+Human * searchHumanByName(string name, string lastName){
+    for (int i = 0; i < humanitySize; i++)
+        if(humanity[i] != NULL && humanity[i]->name == name && humanity[i]->lastName == lastName)
+            return humanity[i];
+    return NULL;
+}
 
 int generateRandomNumber(int to){
     random_device rd;  // A random device to seed the generator

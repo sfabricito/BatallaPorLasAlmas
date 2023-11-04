@@ -25,7 +25,7 @@ void LastnameOptions();
 void menuFamilyPost();
 void DemonOptions();
 void CalculateWinner();
-int CountAlive();
+int Countalive();
 int CountHeaven();
 int CountHell();
 void printFamily(string countryname, string lastname);
@@ -161,7 +161,7 @@ void menuWorld(){
         cout << " (2) Return to Main Menu  " << endl;
         opcion = pedirNumero("Selection: ");
         switch (opcion){
-            case 1: // Ver clientes
+            case 1:{ // Ver clientes
                 limpiarConsola();
                 cout << textoAzul("Generate Humanity") << endl;
                 linea();
@@ -170,6 +170,7 @@ void menuWorld(){
                 generateGeneration(amount);
                 continuar();
                 break;
+            }
             case 2:
                 return;
             default:
@@ -304,7 +305,7 @@ void menuSocialMedia(){
         cout << " (5) Return to Main Menu  " << endl;
         opcion = pedirNumero("Selection: ");
         switch (opcion){
-            case 1: // 
+            case 1:{ // 
                 limpiarConsola();
                 cout << textoAzul("User ID") << endl;
                 int id = pedirNumero("ID: ");
@@ -330,6 +331,7 @@ void menuSocialMedia(){
                     postOnSocialMediaByID(id,option);
                 }
                 break;
+            }
             case 2: //
                 limpiarConsola();
                 cout << textoAzul("Religion") << endl;
@@ -391,7 +393,7 @@ void menuFamilyPost(){
         cout << " (2) Return to Main Menu  " << endl;
         opcion = pedirNumero("Selection: ");
         switch (opcion){
-            case 1:
+            case 1:{
                 limpiarConsola();
                 cout << textoAzul("Country and Last Name") << endl;
                 cout << "Select the country you want to post in" << endl;
@@ -422,7 +424,8 @@ void menuFamilyPost(){
                     postByFamily(countryname, lastname, amount);
                 }
                 break;
-            case 4:
+            }
+            case 2:
                 return;
             default:
                 cout << "Option unavailable, please select a valid option" << endl;
@@ -502,7 +505,7 @@ void menuHuman() {
         opcion = pedirNumero("Selection: ");
 
         switch (opcion) {
-            case 1:
+            case 1:{
                 limpiarConsola();
                 cout << textoAzul("Human ID") << endl;
                 int id = pedirNumero("ID: ");
@@ -520,7 +523,7 @@ void menuHuman() {
                     searchHumanByID(id)->print();
                 }
                 break;
-
+            }
             case 2:
                 limpiarConsola();
                 cout << textoAzul("Human Name and Last Name") << endl;
@@ -548,8 +551,6 @@ void menuHuman() {
     }
 }
 
-
-
 void menuWinner(){
     int opcion = 0;
     while (opcion != 3){
@@ -566,10 +567,10 @@ void menuWinner(){
                 CalculateWinner();
                 continuar();
                 break;
-            case 2: 
+            case 2: {
                 limpiarConsola();
                 cout << textoAzul("Total of humans") << endl;
-                int aliveCount = CountAlive();
+                int aliveCount = Countalive();
                 int heavenCount = CountHeaven();
                 int hellCount = CountHell();
                 cout << "Alive: " << textoVerde(to_string(aliveCount)) << endl;
@@ -578,6 +579,7 @@ void menuWinner(){
                 cout << "Total of humans: " << (aliveCount + heavenCount + hellCount) << endl;
                 continuar();
                 break;
+            }
             case 3:
                 return;
             default:
@@ -609,7 +611,7 @@ int Countalive(){
         }
     }
     cout << "Alive: " << aliveamount << endl;
-
+    return aliveamount;
 }
 int CountHeaven(){
     int heavenamount = 0;
@@ -621,7 +623,7 @@ int CountHeaven(){
         }
     }
     cout << "Heaven: " << heavenamount << endl;
-
+    return heavenamount;
 }
 
 int CountHell(){
@@ -634,6 +636,7 @@ int CountHell(){
         }
     }
     cout << "Hell: " << hellamount << endl;
+    return hellamount;
 }
 
 void menuDemons(){

@@ -100,7 +100,7 @@ struct AngelTree {
             Angel* newAngel = new Angel(randomName, calculatedVersion , calculatedGeneration, savedHuman);
             node = new AngelNode();
             node->angel = newAngel;
-            return;
+            return NULL;
         }
 
         insertAngel(node->leftAngel);

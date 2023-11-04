@@ -1,6 +1,6 @@
 // Imports
 //#include "structs/Human.h"
-#include "structs/Demon.h"
+#include "structs/menu.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -22,14 +22,12 @@ int main(int argc, char const *argv[])
     
     // inOrder(lifeTree->root);
 
-    //     string option;
-    // getline(cin, option);
-
-    // humanity[stoi(option)]->print();
     //cout << height(lifeTree->root) << endl;
     //postByProfession("Engineer", 2); 
     //postByProfession("Doctor", 3);    
     //postByProfession("Teacher", 1);
+
+    menu();
     return 0;
 }
 
