@@ -1,5 +1,6 @@
 output/
 .vscode/
 a.out
+a.exe
 Data/hellLog.txt
 Data/heavenLog.txt
