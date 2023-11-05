@@ -15,6 +15,7 @@ int main(int argc, char const *argv[])
     createDemons();
     hellRecord = new Record("Data/hellLog.txt");
     heavenRecord = new Record("Data/heavenLog.txt");
+    angelTree->insertTotal();
     //generateGeneration(1500);
     
     // humanity[1] = new Human(1, 1, "ALIVE", "Francisco", "Serrano", "Canada", "Hinduism", "Engineer");  

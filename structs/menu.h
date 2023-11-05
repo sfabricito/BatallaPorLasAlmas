@@ -483,7 +483,7 @@ void menuHeaven(){
         switch (opcion){
             case 1:{
                 limpiarConsola();
-                //angeltree->insertTotal();
+                angelTree->insertTotal();
                 cout << textoAzul("Created Angels") << endl;
                 
                 continuar();
@@ -617,8 +617,9 @@ void CalculateWinner(){
 int Countalive(){
     int aliveamount = 0;
     for (int i = 0; i < humanitySize; i++){
-        if (searchHumanByID(i) != NULL){
-            if (searchHumanByID(i)->state == "ALIVE"){
+        Human * humanito = searchHumanByID(i);
+        if (humanito != NULL ){
+            if (humanito->state == "ALIVE"){
                 aliveamount++;
             }
         }
@@ -628,9 +629,10 @@ int Countalive(){
 }
 int CountHeaven(){
     int heavenamount = 0;
-    for (int i = 0; i < humanitySize; i++){
-        if (searchHumanByID(i) != NULL){
-            if (searchHumanByID(i)->state == "HEAVEN"){
+   for (int i = 0; i < humanitySize; i++){
+        Human * humanito = searchHumanByID(i);
+        if (humanito != NULL ){
+            if (humanito->state == "HEAVEN"){
                 heavenamount++;
             }
         }
@@ -642,8 +644,9 @@ int CountHeaven(){
 int CountHell(){
     int hellamount = 0;
     for (int i = 0; i < humanitySize; i++){
-        if (searchHumanByID(i) != NULL){
-            if (searchHumanByID(i)->state == "HELL"){
+        Human * humanito = searchHumanByID(i);
+        if (humanito != NULL ){
+            if (humanito->state == "HELL"){
                 hellamount++;
             }
         }
