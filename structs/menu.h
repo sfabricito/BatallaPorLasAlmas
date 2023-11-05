@@ -1,8 +1,5 @@
 // Includes
-#include "iostream"
-#include "string"
 #include "Angel.h"
-using namespace std;
 
 // Prototipos
 void imprimirBanner();
@@ -62,7 +59,7 @@ void continuar(){
 void limpiarConsola(){
     #ifdef _WIN32
     std::system("cls");
-    #elif _linux_
+    #elif __linux__
     std::system("clear");
     #endif
 }
@@ -101,13 +98,14 @@ void imprimirOpciones(){
     cout << " (6) Heaven" << endl;
     cout << " (7) Human" << endl;
     cout << " (8) Winner" << endl;
-    cout << " (9) Exit  " << endl;
+    cout << " (9) Family" << endl;
+    cout << " (10) Exit  " << endl;
 }
 
 void menu(){
     imprimirBanner();
     int opcion = 0;
-    while (opcion != 8){
+    while (opcion != 10){
         cout << textoAzul("Main Menu") << endl;
         imprimirOpciones();
         opcion = pedirNumero("Selection: ");
@@ -441,7 +439,7 @@ void menuFamilyPost(){
 void DemonOptions(){
     cout << textoRojo(" (1) ASMODEO = Sin = Lust") << endl;
     cout << textoRojo(" (2) BELFEGOR = Sin = Gluttony") << endl;
-    cout << textoAzul(" (3) MAMMON = Sin = Greed") << endl;
+    cout << textoRojo(" (3) MAMMON = Sin = Greed") << endl;
     cout << textoRojo(" (4) ABADON = Sin = Sloth") << endl;
     cout << textoRojo(" (5) SATAN = Sin = Wrath")<< endl;
     cout << textoRojo(" (6) BELCEBU = Sin = Envy") << endl;
@@ -474,20 +472,30 @@ void menuHell(){
 
 void menuHeaven(){
     int opcion = 0;
-    while (opcion != 2){
+    while (opcion != 3){
         limpiarConsola();
         cout << textoAzul("Heaven Menu") << endl;
-        cout << " (1) Print Heaven" << endl;
-        cout << " (2) Return main menu " << endl;
+        //angeltree->insertTotal();
+        cout << "(1)Create Angels" << endl;
+        cout << "(2) Print Heaven" << endl;
+        cout << " (3) Return main menu " << endl;
         opcion = pedirNumero("Selection: ");
         switch (opcion){
             case 1:{
                 limpiarConsola();
-                cout << textoAzul("Heaven") << endl;
-                //heaventree->printHeaven();
+                //angeltree->insertTotal();
+                cout << textoAzul("Created Angels") << endl;
+                
+                continuar();
                 break;
             }
-            case 2:
+            case 2:{
+                limpiarConsola();
+                cout << textoAzul("Heaven") << endl;
+                //heaven->printHeaven();
+                break;
+            }
+            case 3:
                 return;
             default:
                 cout << "Option unavailable, please select a valid option" << endl;
@@ -652,7 +660,7 @@ void menuDemons(){
     while (opcion != 4){
         limpiarConsola();
         cout << textoAzul("Demon Menu") << endl;
-        cout << " (1) Display Demons and their sin" << endl;
+        cout << " (1) Display Demons and their sin to condemn" << endl;
         cout << " (2) Human Sinners" << endl;
         cout << " (3) Display list of sinners" << endl;
         cout << " (4) Return to Main Menu  " << endl;
@@ -662,13 +670,18 @@ void menuDemons(){
                 limpiarConsola();
                 cout << textoRojo("Demons") << endl;
                 DemonOptions();
-                continuar();
+                optiondemon = pedirString("Selection: ");
+                if (optiondemon != "ASMODEO" && optiondemon != "BELFEGOR" && optiondemon != "MAMMON" && optiondemon != "ABADON" && optiondemon != "SATAN" && optiondemon != "BELCEBU" && optiondemon != "LUCIFER"){
+                    cout << "Option unavailable, please select a valid option" << endl;
+                    continuar();
+                    break;
+                }
+                condemnHumans(optiondemon);
                 break;
             case 2: 
                 limpiarConsola();
                 cout << textoRojo("Human Sinners per Demon") << endl;
                 DemonOptions();
-                continuar();
                 optiondemon = pedirString("Selection: ");
                 if (optiondemon != "ASMODEO" && optiondemon != "BELFEGOR" && optiondemon != "MAMMON" && optiondemon != "ABADON" && optiondemon != "SATAN" && optiondemon != "BELCEBU" && optiondemon != "LUCIFER"){
                     cout << "Option unavailable, please select a valid option" << endl;
@@ -723,7 +736,7 @@ int calculateMaximumSinsAmongAllIndividuals(Demon* demon) {
     return maxSins;
 }
 int calculateMinimumSinsAmongAllIndividuals(Demon* demon) {
-    int minSins = 1000; // Initialize with a very large value
+    int minSins = 100000; // Initialize with a very large value
 
     for (int i = 0; i < lastNamesSize * countriesSize; i++) {
         if (demon->families[i] != NULL) {

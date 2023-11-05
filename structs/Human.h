@@ -5,7 +5,7 @@
 #include <random> // Libraru for random numbers
 #include <vector>
 #include <algorithm>
-#include <unistd.h>
+
 #include "LifeTree.h"
 
 // Prototypes
@@ -126,7 +126,7 @@ void generateGeneration(int amount){
     }
     generateLifeTree();
     while (counter > 0)
-        generateFriends(humansGenerated[--counter]);
+         generateFriends(humansGenerated[--counter]);
 }
 
 int generateUniqueID(){
@@ -178,9 +178,9 @@ int calculateFriendshipScore(Human* humanBase, Human* possibleFriend) {
 }
 
 Human * searchHumanByID(int id){
-    if (lifeTree->root != NULL){
-        return search(id, lifeTree->root);
-    }
+    // if (lifeTree->root != NULL){
+    //     return search(id, lifeTree->root);
+    // }
     for (int i = 0; i < humanitySize; i++)
         if(humanity[i] != NULL && i == id)
             return humanity[i];
@@ -254,7 +254,6 @@ int generateLifeTree(){
     int min = (totalNodes / 2);
     int max = min;
     int counter = min;
-
     fillLifeTree(partitionLocations, 0, totalNodes);
     addPointerLeaf(lifeTree->root);
     return 0;
