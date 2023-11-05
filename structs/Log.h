@@ -59,6 +59,7 @@ struct Record{
     }
 
     void sendRecord(string emailSubject, string emailBody){
+        generateFile();
         string subjectWithSpaces = changeEmptySpacesUnderscores(emailSubject);
         const char* subject = subjectWithSpaces.c_str();
         
@@ -68,8 +69,13 @@ struct Record{
         const char* _filename = (filename).c_str();
 
         char command[500];
+        #ifdef _WIN32
+        std::snprintf(command, sizeof(command), "python Mail/sendMail.py %s %s %s", subject, body, _filename);
+        std::system(command);
+        #elif __linux__
         std::snprintf(command, sizeof(command), "python3 Mail/sendMail.py %s %s %s", subject, body, _filename);
         std::system(command);
+        #endif
     }
 };
 

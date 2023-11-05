@@ -1,8 +1,13 @@
 // Imports
 #include <iostream>
 #include <chrono> // Library for dates in C++
-#include <iostream>
 #include <fstream>
+#include <ctime>
+#include <iomanip>
+#include <random> // Libraru for random numbers
+#include <vector>
+#include <algorithm>
+#include <unistd.h>
 using namespace std;
 
 // Structs
@@ -11,6 +16,8 @@ struct Tree;
 struct Demon;
 struct Angel;
 struct Record;
+struct HashTable;
+struct AngelTree;
 
 // Variables
 const int humanitySize = 100000;
@@ -21,6 +28,8 @@ int generation = 0;
 Tree * lifeTree;
 Record * hellRecord;
 Record * heavenRecord;
+HashTable * heaven;
+AngelTree * angelTree;
 
 // Arrays
 Human * humanity[humanitySize];
