@@ -81,6 +81,7 @@ struct Demon{
         int stop = (lastNamesSize * countriesSize); // Possibles families
         for (int i = 0; i < size; i++)
         {
+            humans[i]->state = "HELL";
             for (int y = 0; y < stop; y++)
             {
                 if (families[y] == NULL){
@@ -132,7 +133,6 @@ void condemnHumans(string demonName){
     for (int i = 0; i < humanitySize; i++){
         if (humanity[i] != NULL && searchIndexHigherSinByHuman(i) == demonID){
             Human * human = searchHumanByID(i);
-            human->state == "HELL";
             hellRecord->insertLog(human, generateMessage(human->sins[searchIndexHigherSinByHuman(i)], deadlySins[searchDemonIndex(demonName)] ,demonName));
             insertInDescendingOrderHumans(demon, humans, counter++, human);
         }  

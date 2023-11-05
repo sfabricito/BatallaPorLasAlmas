@@ -11,6 +11,7 @@ int main(int argc, char const *argv[])
 {
     initializeData();
     lifeTree = new Tree();
+    AngelTree * angelTree = new AngelTree();
     createDemons();
     hellRecord = new Record("Data/hellLog.txt");
     heavenRecord = new Record("Data/heavenLog.txt");
@@ -63,11 +64,11 @@ int main(int argc, char const *argv[])
     }
 
     condemnHumans("ABADON");
-
-    hellRecord->sendRecord("Hell condemns record", "You can find the records attachment to this mail.");
-
-    //generateGeneration(1000);
     
+    //hellRecord->sendRecord("Hell condemns record", "You can find the records attachment to this mail.");
+
+
+    angelTree->inserttotal();
     // inOrder(lifeTree->root);
 
     //cout << height(lifeTree->root) << endl;
@@ -139,9 +140,9 @@ void test(){
         humanity[i] = new Human(i, 1, "ALIVE", "John", "Doe", "Canada", "Hinduism", "Engineer");
         humanity[i]->sins[3] = 100;
     }
-    condemnHumans("ABADON");
 
     demons[3]->printFamilies();
+
 
 }
 

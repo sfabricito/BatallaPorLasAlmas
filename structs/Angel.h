@@ -43,23 +43,13 @@ struct AngelNode {
 
 struct AngelTree {
     AngelNode* root;
+    int levelCounter;
+
 
     AngelTree() {
         root = NULL;
-        //generation = 0;
     }
 
-    int countAngels(AngelNode* node) {
-        if (node == NULL) {
-            return 0;
-        }
-
-        int leftCount = countAngels(node->leftAngel);
-        int middleCount = countAngels(node->middleAngel);
-        int rightCount = countAngels(node->rightAngel);
-
-        return 1 + leftCount + middleCount + rightCount;
-    }
 
     AngelName getRandomAngelName() {
         return static_cast<AngelName>(rand() % (NumAngelNames-4));
@@ -68,6 +58,7 @@ struct AngelTree {
     void inserttotal(){
         if (root == NULL){
             insertInitialAngels();
+            levelCounter = 2;
         }
         else{
             addNewAngelLevel();
@@ -92,21 +83,45 @@ struct AngelTree {
 
     AngelNode * insertAngel(AngelNode* node) {
         if (node == NULL) {
-            
-            AngelName randomName = getRandomAngelName();  // Choose a random angel name.
-            int calculatedVersion = calculateAngelVersion(root, randomName, generation); // Calculate version per name.
-            int calculatedGeneration = getHeight(root); // Calculate generation.
-            Human* savedHuman = findHuman(node->angel); // Find the human to save.
-            Angel* newAngel = new Angel(randomName, calculatedVersion , calculatedGeneration, savedHuman);
+            AngelName randomName = getRandomAngelName();
+            int calculatedVersion = calculateAngelVersion(root, randomName, generation);
+            int calculatedGeneration = getHeight(root);
+
+            Angel* newAngel = new Angel(randomName, calculatedVersion, calculatedGeneration, NULL);
             node = new AngelNode();
             node->angel = newAngel;
-            return NULL;
+            Human* savedHuman = findHuman(node->angel);
+            return node; // Return the newly created node.
         }
-
-        insertAngel(node->leftAngel);
-        insertAngel(node->middleAngel);
-        insertAngel(node->rightAngel);
+        else {
+            // Recursively update left, middle, and right subtrees.
+            node->leftAngel = insertAngel(node->leftAngel);
+            node->middleAngel = insertAngel(node->middleAngel);
+            node->rightAngel = insertAngel(node->rightAngel);
+        }
+        return node;
     }
+
+AngelNode* insertAngel2(AngelNode* node, int parentGeneration, int currentGeneration, int maxLevels) {
+    if (node == NULL) {
+        AngelName randomName = getRandomAngelName();
+        int calculatedVersion = calculateAngelVersion(root, randomName, parentGeneration + 1);
+        int calculatedGeneration = parentGeneration + 1;
+
+        Angel* newAngel = new Angel(randomName, calculatedVersion, calculatedGeneration, NULL);
+        node = new AngelNode();
+        node->angel = newAngel;
+        Human* savedHuman = findHuman(node->angel);
+    } else if (currentGeneration < maxLevels) {
+        // Recursively update left, middle, and right subtrees.
+        node->leftAngel = insertAngel2(node->leftAngel, node->angel->generation, currentGeneration + 1, maxLevels);
+        node->middleAngel = insertAngel2(node->middleAngel, node->angel->generation, currentGeneration + 1, maxLevels);
+        node->rightAngel = insertAngel2(node->rightAngel, node->angel->generation, currentGeneration + 1, maxLevels);
+    }
+
+    return node;
+}
+
 
     int getHeight(AngelNode* node) {
         if (node == nullptr) {
@@ -137,46 +152,31 @@ struct AngelTree {
     }
     }
 
-   void addNewAngelLevel() {
-            int currentAngels = countAngels(root);
-            int angelsToAdd = 3 * currentAngels;
+    void addNewAngelLevel() {
 
-            for (int i = 0; i < angelsToAdd; i++) {
-                insertAngel(root);
-            }
-        //generation++;
+        insertAngel2(root, getHeight(root), 0, levelCounter++);
     }
 
     Human * findHuman(Angel * angel){
         Human * humans[humanitySize];
-        int sinneramount;
+        int sinneramount = -1; // Initialize with a value that cannot be the actual sin count.
         Human * sinner = NULL;
+        
         for (int i = 0; i < humanitySize; i++){
             if (humanity[i] != NULL && humanity[i]->state == "HELL"){
-                sinneramount = addallSins(humanity[i]);
-                if (sinner == NULL){
+                int currentSins = humanity[i]->addSins(); // Calculate sins once, instead of multiple times.
+                if (sinner == NULL || currentSins > sinneramount){
+                    sinneramount = currentSins;
                     sinner = humanity[i];
                 }
-                else if (sinneramount > addallSins(sinner)) {
-                    sinner = humanity[i];
-                }
-            }         
-        }
-        sinner->state = "HEAVEN";
-        sinner->saviorAngel = angel;
-        heavenRecord->insertLog(sinner, generateMessage(sinneramount,angel->name,to_string(angel->generation)));
-        return sinner;    
-        }
-
-    int addallSins(Human * human){
-        int sinamountTotal = 0;
-        for (int i = 0; i < humanitySize; i++){
-            if (humanity[i] != NULL){
-                sinamountTotal += humanity[i]->addSins();
             }
-
         }
-        return sinamountTotal;    
+        if (sinner != NULL) { // Ensure sinner is not NULL before making modifications.
+            sinner->state = "HEAVEN";
+            sinner->saviorAngel = angel;
+            heavenRecord->insertLog(sinner, generateMessage(sinneramount, to_string(angel->name), to_string(angel->generation)));
+        }
+        return sinner;    
     }
 };
 
@@ -357,6 +357,24 @@ struct HashTable {
 };
 
 string generateMessage(int sins, AngelName angelsavename, string angelgeneration){
+    string name;
+    switch (angelsavename) {
+        case Miguel: name = "Miguel"; break;
+        case Nuriel: name = "Nuriel"; break;
+        case Aniel: name = "Aniel"; break;
+        case Rafael: name = "Rafael"; break;
+        case Gabriel: name = "Gabriel"; break;
+        case Shamsiel: name = "Shamsiel"; break;
+        case Raguel: name = "Raguel"; break;
+        case Uriel: name = "Uriel"; break;
+        case Azrael: name = "Azrael"; break;
+        case Sariel: name = "Sariel"; break;
+        case God: name = "God"; break;
+        case Seraphim: name = "Seraphim"; break;
+        case Cherubim: name = "Cherubim"; break;
+        case Thrones: name = "Thrones"; break;
+        default: name = "Unknown"; break;
+    }
     string message = "Saved on ";
     auto currentTime = std::chrono::system_clock::now();
     time_t time = std::chrono::system_clock::to_time_t(currentTime);
@@ -367,7 +385,7 @@ string generateMessage(int sins, AngelName angelsavename, string angelgeneration
         message += ss.str();
     }
     message += "saved for " + sins;
-    message += " by " + angelsavename;
+    message += " by " + name;
     message += " generation" +  angelgeneration;
     return message;
 }

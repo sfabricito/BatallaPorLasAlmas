@@ -53,12 +53,3 @@ if len(sys.argv) > 1:
         server.sendmail(sender_email, receiver_email, message.as_string())
 else:
     print("Error handling email sending")
-
-def eliminateUnderScores(text):
-    concat = ""
-    for character in sys.argv[1]: 
-        if character == "_":
-            concat += " "
-        else:
-            concat += character
-    return concat

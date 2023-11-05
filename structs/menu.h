@@ -663,7 +663,7 @@ void menuDemons(){
             case 2: 
                 limpiarConsola();
                 cout << textoRojo("Human Sinners per Demon") << endl;
-                //Function to print sinners per demon
+                //Function to print
                 break;
             case 3: 
                 limpiarConsola();
