@@ -4,6 +4,7 @@
 #include "Data.h"
 
 // Prototypes
+void printHuman(Human * human);
 Human * searchHumanByID(int id);
 
 // Structs
@@ -94,6 +95,26 @@ void addPointerLeaf(Node * root)
     }
     addPointerLeaf(root->rightNode);
     addPointerLeaf(root->leftNode);
+}
+
+void humansLeaf(Node* root, vector<Human*>& leafHumans) {
+    if (root == NULL)
+        return;
+    else if (root->leftNode == NULL && root->rightNode == NULL) {
+        leafHumans.push_back(root->human);
+        return;
+    }
+    humansLeaf(root->rightNode, leafHumans);
+    humansLeaf(root->leftNode, leafHumans);
+}
+
+int countLeaf(Node * root) {
+    if (root == NULL)
+        return 0;
+    else if (root->leftNode == NULL && root->rightNode == NULL)
+        return 1;
+    else
+        return countLeaf(root->leftNode) + countLeaf(root->rightNode);
 }
 
 int countNodes(Node * node){

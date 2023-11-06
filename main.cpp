@@ -11,11 +11,21 @@ int main(int argc, char const *argv[])
 {
     initializeData();
     lifeTree = new Tree();
-    AngelTree * angelTree = new AngelTree();
+    angelTree = new AngelTree();
+    heaven = new HashTable();
     createDemons();
     hellRecord = new Record("Data/hellLog.txt");
     heavenRecord = new Record("Data/heavenLog.txt");
-    //generateGeneration(1500);
+    angelTree->insertTotal();
+    //generateGeneration(1500); 
+    //postByReligion("Islam");
+    //condemnHumans("ABADON");
+
+    //angelTree->insertTotal();
+
+    //heaven->printHeaven();
+
+
     
     // humanity[1] = new Human(1, 1, "ALIVE", "Francisco", "Serrano", "Canada", "Hinduism", "Engineer");  
     // humanity[1]->sins[3] = 110;

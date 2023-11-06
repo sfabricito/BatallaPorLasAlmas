@@ -76,21 +76,33 @@ struct Human{
         cout << "Social Media: [";
         for (int i = 0; i < 7; i++)
         {
-            cout << socialMediaPriority[i] << ", ";
+            if (i != 6)
+                cout << socialMediaPriority[i] << ", ";
+            else
+                cout << socialMediaPriority[i];
         }
         cout << "]" << endl;
         cout << "Sins: [";
         for (int i = 0; i < 7; i++)
         {
-            cout << sins[i] << ", ";
+            if (i != 6)
+                cout << sins[i] << ", ";
+            else
+                cout << sins[i];
         }
         cout << "]" << endl; 
-        cout << "Friends" << endl; 
+        cout << "Friends: "; 
         for (int i = 0; i < 100; i++){
             if (friends[i] != NULL){
-                cout << friends[i]->id << endl;
-                cout << "--------------------------------------" << endl;
-            }     
+                if (i == 0)
+                    cout << "[" << friends[i]->id << ", " << endl;
+                else if (i != 99)
+                    cout << " " << friends[i]->id << ", " << endl;
+                else if(i == 99)
+                    cout << " " << friends[i]->id << "]" << endl;
+            } else {
+                
+            }
         }
     }
     

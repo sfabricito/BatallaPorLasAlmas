@@ -62,9 +62,11 @@ struct HashTree {
     }
 
     HeavenHashNode* insertAuxHash(int id, HeavenHashNode* node) {
-        if (node == NULL)
+        if (node == NULL){
+            cout << "Creating heaven hash node" << endl;
+            searchHumanByID(id)->print();
             return new HeavenHashNode(id);
-
+        }
         if (id < node->id)
             node->leftNode = insertAuxHash(id, node->leftNode);
         else if (id > node->id)
@@ -111,9 +113,7 @@ struct HashTree {
         if (node == NULL)
             return;
        inOrder(node->leftNode);
-        cout << "Human Info"<< endl;
-        cout << node->id << " "; // Print the id of the node
-        node->human->print(); // Print the human object (Esta vara deberia ir bien)
+        searchHumanByID(root->id)->print();
         cout << "----------------------------------------------------------------------------------------" << endl;
         inOrder(node->rightNode);
 
@@ -140,7 +140,6 @@ struct HashTree {
         return NULL;
     }
 };
-
 
 struct HashTable {
 
@@ -198,6 +197,8 @@ enum AngelName {
     NumAngelNames
 };
 
+string generateAngelMessage(int sins, AngelName angelsavename, string angelgeneration);
+
 struct Angel {
     AngelName name;            // Nombre del ángel
     int version;            // ID 
@@ -240,6 +241,7 @@ struct AngelTree {
         }
         else{
             addNewAngelLevel();
+            heavenRecord->sendRecord("Heaven record", "You can find the records attachment to this mail.");
         }
     }
 
@@ -335,13 +337,14 @@ AngelNode* insertAngel2(AngelNode* node, int parentGeneration, int currentGenera
         if (sinner != NULL) { // Ensure sinner is not NULL before making modifications.
             sinner->state = "HEAVEN";
             sinner->saviorAngel = angel;
-            heavenRecord->insertLog(sinner, generateMessage(sinneramount, to_string(angel->name), to_string(angel->generation)));
+            cout << "Sinner Amount: " <<  sinneramount << endl;
+            heavenRecord->insertLog(sinner, generateAngelMessage(sinneramount, angel->name, to_string(angel->generation)));
         }
         return sinner;    
     }
 };
 
-string generateMessage(int sins, AngelName angelsavename, string angelgeneration){
+string generateAngelMessage(int sins, AngelName angelsavename, string angelgeneration){
     string name;
     switch (angelsavename) {
         case Miguel: name = "Miguel"; break;
@@ -366,10 +369,10 @@ string generateMessage(int sins, AngelName angelsavename, string angelgeneration
     std::tm* timeinfo = std::localtime(&time);
     if (timeinfo) {
         std::stringstream ss;
-        ss << std::put_time(timeinfo, "%Y-%m-%d %H:%M:%S");
+        ss << std::put_time(timeinfo, "%Y-%m-%d");
         message += ss.str();
     }
-    message += "saved for " + sins;
+    message += "saved for " + to_string(sins);
     message += " by " + name;
     message += " generation" +  angelgeneration;
     return message;

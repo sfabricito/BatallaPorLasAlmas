@@ -146,6 +146,7 @@ void menu(){
             case 9:
                 limpiarConsola();
                 menuFamily();
+                break;
             case 10:
                 return;
         }
@@ -181,8 +182,6 @@ void menuWorld(){
     }
 }
 
-
-
 void menuTree(){
     int opcion = 0;
     while (opcion != 5){
@@ -198,26 +197,31 @@ void menuTree(){
             case 1: // Print amount of tree levels
                 limpiarConsola();
                 cout << textoAzul("Tree Levels") << endl;
-                cout << " Amount of tree levels" << endl;
-                //cout << tree->height() << endl;
+                cout << "Amount of tree levels: ";
+                cout << height(lifeTree->root) << endl;
                 break;
             case 2: // Print amount of nodes
                 limpiarConsola();
                 cout << textoAzul("Tree Nodes") << endl;;
-                cout << " Amount of nodes" << endl;
-                //cout << tree->countNodes() << endl;//Corregir
+                cout << "Amount of nodes: ";
+                cout << countNodes(lifeTree->root) << endl;//Corregir
                 break;
             case 3: // Print amount of humans
                 limpiarConsola();
                 cout << textoAzul("Humans in Tree") << endl;;
-                cout << " Amount of humans in tree" << endl;
-                //cout << tree->countHumans() << endl;//Corregir
+                cout << "Amount of humans in tree: ";
+                cout << countLeaf(lifeTree->root) << endl;
                 break;
-            case 4: // Print humans ask teacher
+            case 4:{ // Print humans ask teacher
                 limpiarConsola();
-                cout << textoAzul("Humans") << endl;
-                // Funcion to print humans ask teacher
+                cout << textoAzul("Humans in Tree") << endl;
+                vector<Human*> humans;
+                humansLeaf(lifeTree->root, humans);
+                for (size_t i = 0; i < humans.size(); ++i) {
+                    humans[i]->print();
+                }
                 break;
+            }
             case 5:
                 return;
             default:
@@ -475,7 +479,6 @@ void menuHeaven(){
     while (opcion != 3){
         limpiarConsola();
         cout << textoAzul("Heaven Menu") << endl;
-        //angeltree->insertTotal();
         cout << "(1)Create Angels" << endl;
         cout << "(2) Print Heaven" << endl;
         cout << " (3) Return main menu " << endl;
@@ -483,7 +486,7 @@ void menuHeaven(){
         switch (opcion){
             case 1:{
                 limpiarConsola();
-                //angeltree->insertTotal();
+                angelTree->insertTotal();
                 cout << textoAzul("Created Angels") << endl;
                 
                 continuar();
@@ -492,7 +495,8 @@ void menuHeaven(){
             case 2:{
                 limpiarConsola();
                 cout << textoAzul("Heaven") << endl;
-                //heaven->printHeaven();
+                heaven->printHeaven();
+                continuar();
                 break;
             }
             case 3:
@@ -534,6 +538,7 @@ void menuHuman() {
                 else {
                     searchHumanByID(id)->print();
                 }
+                continuar();
                 break;
             }
             case 2:
@@ -549,6 +554,7 @@ void menuHuman() {
                     if (human!= NULL) {
                         if (human->name == namedecision && human->lastName == lastNamedecision) {
                             human->print();
+                            break;
                         }
                     }
                 }
@@ -707,6 +713,7 @@ void menuDemons(){
                 }
                 demonchoosen = searchDemonByName(optiondemon);
                 demonchoosen->printFamilies();
+                continuar();
                 break;
             case 4:
                 return;
@@ -838,10 +845,10 @@ void insertInDescendingOrderHumanFamily(Human* humans[], int total, Human* human
 }
 
 void printFamily(string countryname,string lastname){
-    int total = 0;
-    int alive = 0;
-    int heaven = 0;
-    int hell = 0;
+    double total = 0.0;
+    double alive = 0.0;
+    double heaven = 0.0;
+    double hell = 0.0;
 
         // Create an array to store pointers to Human objects
     Human* humanfamily[humanitySize];
@@ -875,9 +882,10 @@ void printFamily(string countryname,string lastname){
     cout << "Alive: " << alive << endl;
     cout << "Heaven: " << heaven << endl;
     cout << "Hell: " << hell << endl;
-    cout << "Alive Percentage: " << (alive/total)*100 << "%" << endl;
-    cout << "Heaven Percentage: " << (heaven/total)*100 << "%" << endl;
-    cout << "Hell Percentage: " << (hell/total)*100 << "%" << endl;
+    cout << std::fixed << std::setprecision(2);
+    cout << "Alive Percentage: " << (alive/total)*100.0 << "%" << endl;
+    cout << "Heaven Percentage: " << (heaven/total)*100.0 << "%" << endl;
+    cout << "Hell Percentage: " << (hell/total)*100.0 << "%" << endl;
 
     cout << textoAzul("Family Members") << endl;
     for (int i = 0; i < total; i++) {

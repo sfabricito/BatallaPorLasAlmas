@@ -4,12 +4,12 @@
 // Prototypes
 struct Demon;
 int searchDemonIndex(string name);
-void addHumansToFamilies(Demon * demon, Human * humans[], int size);
+void addHumansToFamilies(Human * humans[], int size, string demonName);
 void insertInOrderHumans(Demon * demon, Human * arr[], Human * human, int capacity);
 void insertInDescendingOrderHumans(Demon* demon, Human* humans[], int length, Human* human);
 int searchIndexHigherSinByHuman(int id);
 Demon * searchDemonByName(string demonName);
-string generateMessage(int sins, string sin, string demon);
+string generateDemonMessage(int sins, string sin, string demon);
 
 // Structs
 struct Family{
@@ -77,7 +77,8 @@ struct Demon{
         }
     }
 
-    void addHumansToFamilies( Human * humans[], int size){ // size = total humans
+    void addHumansToFamilies(Human * humans[], int size, string demonName){ // size = total humans
+        hellRecord = new Record(hellRecord->filename);
         int stop = (lastNamesSize * countriesSize); // Possibles families
         for (int i = 0; i < size; i++)
         {
@@ -88,14 +89,17 @@ struct Demon{
                     families[y] = new Family(humans[i]->country, humans[i]->lastName);
                     totalFamilies++;
                     families[y]->addHuman(humans[i], humans[i]->sins[searchDemonIndex(type)]);
+                    hellRecord->insertLog(humans[i], generateDemonMessage(humans[i]->sins[searchIndexHigherSinByHuman(i)], deadlySins[searchDemonIndex(demonName)] ,demonName));
                     break;
                 }
                 else if((families[y]->country == humans[i]->country) && (families[y]->lastName == humans[i]->lastName)){
                     families[y]->addHuman(humans[i], humans[i]->sins[searchDemonIndex(type)]);
+                    hellRecord->insertLog(humans[i], generateDemonMessage(humans[i]->sins[searchIndexHigherSinByHuman(i)], deadlySins[searchDemonIndex(demonName)] ,demonName));
                     break;
                 }
             }
         }
+        hellRecord->sendRecord("Hell condemns record", "You can find the records attachment to this mail.");
     }
     void maxHeapify(int index)
     {
@@ -133,11 +137,10 @@ void condemnHumans(string demonName){
     for (int i = 0; i < humanitySize; i++){
         if (humanity[i] != NULL && searchIndexHigherSinByHuman(i) == demonID){
             Human * human = searchHumanByID(i);
-            hellRecord->insertLog(human, generateMessage(human->sins[searchIndexHigherSinByHuman(i)], deadlySins[searchDemonIndex(demonName)] ,demonName));
             insertInDescendingOrderHumans(demon, humans, counter++, human);
         }  
     }
-    demon->addHumansToFamilies(humans, counter * 0.05);
+    demon->addHumansToFamilies(humans, counter * 0.05, demonName);
     demon->maxHeapify(0);
 }
 
@@ -186,7 +189,7 @@ Demon * searchDemonByName(string demonName){
     return NULL;
 }
 
-string generateMessage(int sins, string sin, string demon){
+string generateDemonMessage(int sins, string sin, string demon){
     string message = "dead on ";
     auto currentTime = std::chrono::system_clock::now();
     time_t time = std::chrono::system_clock::to_time_t(currentTime);
