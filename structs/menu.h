@@ -635,7 +635,7 @@ int Countalive(){
 }
 int CountHeaven(){
     int heavenamount = 0;
-   for (int i = 0; i < humanitySize; i++){
+    for (int i = 0; i < humanitySize; i++){
         Human * humanito = searchHumanByID(i);
         if (humanito != NULL ){
             if (humanito->state == "HEAVEN"){
