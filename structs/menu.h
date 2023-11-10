@@ -288,7 +288,7 @@ void LastnameOptions(){
     cout << " Delgado" << endl;
     cout << " Rivera" << endl;
     cout << " Serrano" << endl;
-    cout << " Alarcón" << endl;
+    cout << " Alarcon" << endl;
     cout << " Mendoza" << endl;
     cout << " Vargas" << endl;
     cout << " Herrera" << endl;
@@ -413,7 +413,7 @@ void menuFamilyPost(){
                 cout << "Select the last name you want to post with" << endl;
                 LastnameOptions();
                 lastname = pedirString("Selection: ");
-                if (lastname != "Castillo" && lastname != "Montenegro" && lastname != "Valencia" && lastname != "Delgado" && lastname != "Rivera" && lastname != "Serrano" && lastname != "Alarcón" && lastname != "Mendoza" && lastname != "Vargas" && lastname != "Herrera" && lastname != "Roman" && lastname != "Paredes"){
+                if (lastname != "Castillo" && lastname != "Montenegro" && lastname != "Valencia" && lastname != "Delgado" && lastname != "Rivera" && lastname != "Serrano" && lastname != "Alarcon" && lastname != "Mendoza" && lastname != "Vargas" && lastname != "Herrera" && lastname != "Roman" && lastname != "Paredes"){
                     cout << "Option unavailable, please select a valid option" << endl;
                     continuar();
                     break;
@@ -815,7 +815,7 @@ void menuFamily(){
                 cout << "Select the last name you want to print" << endl;
                 LastnameOptions();
                 lastname = pedirString("Last Name: ");
-                if (lastname != "Castillo" && lastname != "Montenegro" && lastname != "Valencia" && lastname != "Delgado" && lastname != "Rivera" && lastname != "Serrano" && lastname != "Alarcón" && lastname != "Mendoza" && lastname != "Vargas" && lastname != "Herrera" && lastname != "Roman" && lastname != "Paredes"){
+                if (lastname != "Castillo" && lastname != "Montenegro" && lastname != "Valencia" && lastname != "Delgado" && lastname != "Rivera" && lastname != "Serrano" && lastname != "Alarcon" && lastname != "Mendoza" && lastname != "Vargas" && lastname != "Herrera" && lastname != "Roman" && lastname != "Paredes"){
                     cout << "Option unavailable, please select a valid option" << endl;
                     continuar();
                     break;
